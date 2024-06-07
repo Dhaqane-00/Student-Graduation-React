@@ -9,7 +9,7 @@ function SinglePrediction(): ReactElement {
       component="main"
       sx={{
         width: { md: `calc(100% - ${drawerWidth}px)` },
-        pl: { xs: 3.75, lg: 40 },
+        pl: { xs: 3.75, lg: 50 },
         pt: 4.375,
         pr: 1.875,
         pb: 1.875,

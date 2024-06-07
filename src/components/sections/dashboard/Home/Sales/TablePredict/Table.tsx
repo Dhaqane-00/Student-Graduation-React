@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useMemo, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useMemo, useState, useEffect } from 'react';
 import {
   Avatar,
   Divider,
@@ -28,7 +28,7 @@ const columns: GridColDef[] = [
 const Table = (): ReactElement => {
   const apiRef = useGridApiRef<GridApi>();
   const [search, setSearch] = useState('');
-  const { data, isLoading, error } = useGetResultsQuery({}, { refetchOnMountOrArgChange: true });
+  const { data, isLoading, error, refetch } = useGetResultsQuery({}, { refetchOnMountOrArgChange: true });
 
   const rows = useMemo(() => {
     if (!data) return [];
@@ -55,6 +55,14 @@ const Table = (): ReactElement => {
     setSearch(searchValue);
     handleGridSearch(searchValue);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 5000); // Adjust the polling interval as per your requirement
+
+    return () => clearInterval(interval);
+  }, [refetch]);
 
   if (isLoading) return <LinearProgress />;
   if (error) return <Typography color="error">Error loading data</Typography>;
