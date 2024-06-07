@@ -32,7 +32,7 @@ function Pagination({
           ml={belowSmallScreen ? 'auto' : ''}
         >
           Showing {(paginationRowRange?.firstRowIndex as number) + 1} -{' '}
-          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Products
+          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Prediction
         </Typography>
       ) : (
         <Typography
@@ -42,7 +42,7 @@ function Pagination({
           ml={belowSmallScreen ? 'auto' : ''}
         >
           Showing {(paginationRowRange?.firstRowIndex as number) + 1} -{' '}
-          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Products
+          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Prediction
         </Typography>
       )}
       <MuiPagination
