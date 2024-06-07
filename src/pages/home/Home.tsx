@@ -9,7 +9,7 @@ import Revenue from 'components/sections/dashboard/Home/Sales/Revenue/Revenue';
 
 import { drawerWidth } from 'layouts/main-layout';
 
-const Sales = (): ReactElement => {
+const Home = (): ReactElement => {
   return (
     <Grid
       container
@@ -46,4 +46,4 @@ const Sales = (): ReactElement => {
   );
 };
 
-export default Sales;
+export default Home;

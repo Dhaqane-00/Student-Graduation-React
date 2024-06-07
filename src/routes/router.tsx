@@ -25,8 +25,9 @@ const Error404 = lazy(async () => {
 });
 
 const Dashboard = lazy(() => import('pages/home/Dashboard'));
-const Sales = lazy(() => import('pages/home/Sales'));
+const Home = lazy(() => import('pages/home/Home'));
 const Prediction = lazy(() => import('pages/prediction/Predictions'));
+const SinglePrediction = lazy(() => import('pages/SinglePredictio/SinglePrediction'));
 
 const Login = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -61,7 +62,7 @@ const routes = [
         children: [
           {
             path: '',
-            element: <Sales />,
+            element: <Home />,
           },
           {
             path: 'dashboard',
@@ -70,6 +71,10 @@ const routes = [
           {
             path: 'prediction',
             element: <Prediction />,
+          },
+          {
+            path: 'SinglePrediction',
+            element: <SinglePrediction />,
           },
         ],
       },

@@ -1,20 +1,42 @@
 import { ReactElement } from "react"
-import Grid from '@mui/material/Unstable_Grid2';
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
+import FileUpload from "components/sections/dashboard/Home/Sales/Fileupload/FileUpload";
+import { drawerWidth } from "layouts/main-layout";
+import Table from "components/sections/dashboard/Home/Sales/TablePredict/Table";
 
-import TopSellingProduct from 'components/sections/dashboard/Home/Sales/TopSellingProduct/TopSellingProduct';
-import WebsiteVisitors from 'components/sections/dashboard/Home/Sales/WebsiteVisitors/WebsiteVisitors';
-import SaleInfoCards from 'components/sections/dashboard/Home/Sales/SaleInfoSection/SaleInfoCards';
-import BuyersProfile from 'components/sections/dashboard/Home/Sales/BuyersProfile/BuyersProfile';
-import NewCustomers from 'components/sections/dashboard/Home/Sales/NewCustomers/NewCustomers';
-import Revenue from 'components/sections/dashboard/Home/Sales/Revenue/Revenue';
-
-function Predictions(): ReactElement{
+function Predictions(): ReactElement {
   return (
-    <Grid xs={12} lg={8}>
-    <TopSellingProduct />
-  </Grid>
-  )
+    <Box
+      component="main"
+      sx={{
+        width: { md: `calc(100% - ${drawerWidth}px)` },
+        pl: { xs: 3.75, lg: 0 },
+        pt: 4.375,
+        pr: 1.875,
+        pb: 1.875,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Stack
+        spacing={3.75}
+        sx={{
+          width: '100%',
+          maxWidth: 600, // Adjust as needed to fit your design
+          alignItems: 'center',
+        }}
+      >
+        <Box sx={{ width: '140%' }}>
+          <FileUpload />
+        </Box>
+        <Box sx={{ width: '140%' }}>
+          <Table/>
+        </Box>
+      </Stack>
+    </Box>
+  );
 }
 
-export default Predictions
+export default Predictions;
+

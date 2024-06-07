@@ -37,6 +37,13 @@ const navItems: NavItem[] = [
     collapsible: false,
   },
   {
+    title: ' Single Prediction',
+    path: '/SinglePrediction',
+    icon: 'ion:analytics',
+    active: false,
+    collapsible: false,
+  },
+  {
     title: 'Authentication',
     path: 'authentication',
     icon: 'f7:exclamationmark-shield-fill',
@@ -62,13 +69,6 @@ const navItems: NavItem[] = [
         collapsible: false,
       },
     ],
-  },
-  {
-    title: 'Calendar',
-    path: '#!',
-    icon: 'ph:calendar',
-    active: false,
-    collapsible: false,
   },
 ];
 
