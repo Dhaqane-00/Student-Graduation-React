@@ -10,11 +10,13 @@ import {
   Tooltip,
   Typography,
   debounce,
+  IconButton,
 } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlotsComponent, useGridApiRef } from '@mui/x-data-grid';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { useGetResultsQuery } from 'store/api/fileApi';
 import CustomPagination from './CustomPagination';
+import { useBreakpoints } from 'providers/BreakpointsProvider';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID' },
@@ -29,6 +31,8 @@ const Table = (): ReactElement => {
   const apiRef = useGridApiRef<GridApi>();
   const [search, setSearch] = useState('');
   const { data, isLoading, error, refetch } = useGetResultsQuery({}, { refetchOnMountOrArgChange: true });
+  const { down } = useBreakpoints();
+  const belowSmallScreen = down('sm');
 
   const rows = useMemo(() => {
     if (!data) return [];
@@ -56,6 +60,21 @@ const Table = (): ReactElement => {
     handleGridSearch(searchValue);
   };
 
+  const handleDownload = () => {
+    console.log('Download button clicked');
+    // Implement download functionality here
+  };
+
+  const handlePrint = () => {
+    console.log('Print button clicked');
+    // Implement print functionality here
+  };
+
+  const handleFilter = () => {
+    console.log('Filter button clicked');
+    // Implement filter functionality here
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
@@ -70,30 +89,42 @@ const Table = (): ReactElement => {
   return (
     <Stack bgcolor="background.paper" borderRadius={5} width={1} height={1}>
       <Stack
-        direction={{ sm: 'row' }}
+        direction={belowSmallScreen ? 'column' : 'row'}
         justifyContent="space-between"
-        alignItems={{ sm: 'center' }}
+        alignItems="center"
         padding={3.75}
         gap={3.75}
       >
         <Typography variant="h5" color="text.primary">
           Predict
         </Typography>
-        <TextField
-          variant="filled"
-          placeholder="Search..."
-          id="search-input"
-          name="table-search-input"
-          onChange={handleChange}
-          value={search}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end" sx={{ width: 24, height: 24 }}>
-                <IconifyIcon icon="mdi:search" width={1} height={1} />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <Stack direction="row" spacing={2}>
+          <TextField
+            variant="filled"
+            placeholder="Search..."
+            id="search-input"
+            name="table-search-input"
+            onChange={handleChange}
+            value={search}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" sx={{ width: 24, height: 24 }}>
+                  <IconifyIcon icon="mdi:search" width={1} height={1} />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ width: belowSmallScreen ? '100%' : 'auto' }}
+          />
+          <IconButton onClick={handleDownload}>
+            <IconifyIcon icon="mdi:download" width={24} height={24} />
+          </IconButton>
+          <IconButton onClick={handlePrint}>
+            <IconifyIcon icon="mdi:printer" width={24} height={24} />
+          </IconButton>
+          <IconButton onClick={handleFilter}>
+            <IconifyIcon icon="mdi:filter-variant" width={24} height={24} />
+          </IconButton>
+        </Stack>
       </Stack>
       <Divider />
       <Stack height={1}>
