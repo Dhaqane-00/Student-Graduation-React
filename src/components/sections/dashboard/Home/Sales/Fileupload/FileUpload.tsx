@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useCallback } from 'react';
-import { Box, Button, IconButton, Typography, Grid } from '@mui/material';
+import { Box, Button, IconButton, Typography, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { CloudUpload, Delete } from '@mui/icons-material';
 import { useUploadFileMutation } from 'store/api/fileApi'; // Import your RTK query API
 import * as Yup from 'yup';
@@ -73,31 +73,51 @@ const FileDropzone: React.FC<{ setFile: (file: FileWithName | null) => void }> =
 
 const FileUpload: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FileWithName | null>(null);
-  const [uploadFileMutation] = useUploadFileMutation(); // Initialize the uploadFile mutation
+  const [uploadFileMutation] = useUploadFileMutation();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
   };
 
-  const handleUpload = async () => {
-    if (selectedFile) {
-      try {
-        const response = await uploadFileMutation(selectedFile); // Call the uploadFile mutation
-        console.log(response);
-        toast.success('File uploaded successfully!', {
-          position: "top-center",
-        });
-        setSelectedFile(null);
-      } catch (error) {
-        toast.error('Error uploading file!', {
-          position: "top-center",
-        });
+const handleUpload = async () => {
+  if (selectedFile) {
+    try {
+      const response = await uploadFileMutation(selectedFile);
+      console.log(response);
+      if (response.data && response.data.message) {
+        toast.success(response.data.message, { position: "top-center" }); // Update toast text
+      } else {
+        toast.error('Unknown response from server!', { position: "top-center" });
       }
-    } else {
-      toast.error('No file selected!', {
-        position: "top-center",
-      });
+      setSelectedFile(null);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error, { position: "top-center" }); // Display error message from server
+      } else if (error.message) {
+        toast.error(error.message, { position: "top-center" }); // Display generic error message
+      } else {
+        toast.error('Error uploading file!', { position: "top-center" });
+      }
     }
+  } else {
+    toast.error('No file selected!', { position: "top-center" });
+  }
+};
+
+  
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleConfirmUpload = () => {
+    handleCloseDialog();
+    handleUpload();
   };
 
   return (
@@ -127,7 +147,7 @@ const FileUpload: React.FC = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleUpload}
+            onClick={handleOpenDialog}
             disabled={!selectedFile}
             sx={{ mt: 2 }}
           >
@@ -146,6 +166,22 @@ const FileUpload: React.FC = () => {
           )}
           <ToastContainer />
         </Box>
+        <Dialog open={openDialog} onClose={handleCloseDialog}>
+          <DialogTitle>Confirm Upload</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Uploading a new file will clear the old prediction. Are you sure you want to proceed?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmUpload} color="primary" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Grid>
     </Grid>
   );

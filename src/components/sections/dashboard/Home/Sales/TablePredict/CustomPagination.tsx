@@ -25,27 +25,15 @@ function Pagination({
 
   return (
     <>
-      {pageCount !== 0 ? (
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          mr="auto"
-          ml={belowSmallScreen ? 'auto' : ''}
-        >
-          Showing {(paginationRowRange?.firstRowIndex as number) + 1} -{' '}
-          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Prediction
-        </Typography>
-      ) : (
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          mr="auto"
-          ml={belowSmallScreen ? 'auto' : ''}
-        >
-          Showing {(paginationRowRange?.firstRowIndex as number) + 1} -{' '}
-          {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Prediction
-        </Typography>
-      )}
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        mr={belowSmallScreen ? 0 : 'auto'}
+        ml={belowSmallScreen ? 0 : ''}
+      >
+        Showing {(paginationRowRange?.firstRowIndex as number) + 1} -{' '}
+        {(paginationRowRange?.lastRowIndex as number) + 1} of {available} Prediction
+      </Typography>
       <MuiPagination
         color="primary"
         className={className}
