@@ -1,10 +1,13 @@
 import React, { ChangeEvent, ReactElement, useMemo, useState, useEffect } from 'react';
 import {
+  Avatar,
   Divider,
   InputAdornment,
   LinearProgress,
+  Link,
   Stack,
   TextField,
+  Tooltip,
   Typography,
   debounce,
   IconButton,
@@ -14,16 +17,6 @@ import IconifyIcon from 'components/base/IconifyIcon';
 import { useGetResultsQuery } from 'store/api/fileApi';
 import CustomPagination from './CustomPagination';
 import { useBreakpoints } from 'providers/BreakpointsProvider';
-import * as XLSX from 'xlsx';
-
-interface RowData {
-  id: string;
-  department: string;
-  gpa: string;
-  gender: string;
-  mode: string;
-  prediction: string;
-}
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID' },
@@ -36,15 +29,14 @@ const columns: GridColDef[] = [
 
 const Table = (): ReactElement => {
   const apiRef = useGridApiRef<GridApi>();
-  const [search, setSearch] = useState<string>('');
-  const [filteredRows, setFilteredRows] = useState<RowData[]>([]);
+  const [search, setSearch] = useState('');
   const { data, isLoading, error, refetch } = useGetResultsQuery({}, { refetchOnMountOrArgChange: true });
   const { down } = useBreakpoints();
   const belowSmallScreen = down('sm');
 
   const rows = useMemo(() => {
     if (!data) return [];
-    return data.results.map((item: { _id: string; Department: string; GPA: string; Gender: string; Mode: string; Prediction: string; }): RowData => ({
+    return data.results.map((item: { _id: any; Department: any; GPA: any; Gender: any; Mode: any; Prediction: any; }) => ({
       id: item._id,
       department: item.Department,
       gpa: item.GPA,
@@ -54,12 +46,8 @@ const Table = (): ReactElement => {
     }));
   }, [data]);
 
-  useEffect(() => {
-    setFilteredRows(rows);
-  }, [rows]);
-
   const handleGridSearch = useMemo(() => {
-    return debounce((searchValue: string) => {
+    return debounce((searchValue) => {
       apiRef.current.setQuickFilterValues(
         searchValue.split(' ').filter((word: string) => word !== ''),
       );
@@ -73,10 +61,18 @@ const Table = (): ReactElement => {
   };
 
   const handleDownload = () => {
-    const ws = XLSX.utils.json_to_sheet(filteredRows);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'data.xlsx');
+    console.log('Download button clicked');
+    // Implement download functionality here
+  };
+
+  const handlePrint = () => {
+    console.log('Print button clicked');
+    // Implement print functionality here
+  };
+
+  const handleFilter = () => {
+    console.log('Filter button clicked');
+    // Implement filter functionality here
   };
 
   useEffect(() => {
@@ -120,16 +116,22 @@ const Table = (): ReactElement => {
             sx={{ width: belowSmallScreen ? '100%' : 'auto' }}
           />
           <IconButton onClick={handleDownload}>
-            <IconifyIcon icon="mdi:download" width={24} height={24} color="black" />
+            <IconifyIcon icon="mdi:download" width={24} height={24} />
+          </IconButton>
+          <IconButton onClick={handlePrint}>
+            <IconifyIcon icon="mdi:printer" width={24} height={24} />
+          </IconButton>
+          <IconButton onClick={handleFilter}>
+            <IconifyIcon icon="mdi:filter-variant" width={24} height={24} />
           </IconButton>
         </Stack>
       </Stack>
       <Divider />
-      <Stack height={1} id="table-content">
+      <Stack height={1}>
         <DataGrid
           apiRef={apiRef}
           columns={columns}
-          rows={filteredRows}
+          rows={rows}
           getRowHeight={() => 70}
           hideFooterSelectedRowCount
           disableColumnResize
