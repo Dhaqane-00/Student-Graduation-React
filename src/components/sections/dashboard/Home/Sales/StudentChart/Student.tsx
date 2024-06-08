@@ -96,10 +96,10 @@ const Student = (): ReactElement => {
           ref={chartRef}
           echarts={echarts}
           option={option}
-          style={{ height: '150%', width: '100%' }}
+          style={{ height: '130%', width: '100%' }}
         />
       </Box>
-      <Box padding={3.75} display="flex" justifyContent="space-around">
+      <Box padding={1.75} display="flex" justifyContent="space-around">
         <Box textAlign="center">
           <Typography variant="h6" color="text.primary">
             Total Graduates
