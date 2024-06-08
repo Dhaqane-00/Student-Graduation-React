@@ -14,7 +14,7 @@ type RevenueChartProps = {
   sx?: SxProps;
 };
 
-const RevenueChart = ({ chartRef, seriesData, legendData, colors, ...rest }: RevenueChartProps) => {
+const TotalStudent = ({ chartRef, seriesData, legendData, colors, ...rest }: RevenueChartProps) => {
   const theme = useTheme();
 
   // const chartOption = useMemo(() => {
@@ -98,4 +98,4 @@ const RevenueChart = ({ chartRef, seriesData, legendData, colors, ...rest }: Rev
   return <ReactEchart ref={chartRef} echarts={echarts} option={option} {...rest} />;
 };
 
-export default RevenueChart;
+export default TotalStudent;

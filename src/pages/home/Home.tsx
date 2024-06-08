@@ -5,7 +5,7 @@ import { ReactElement } from 'react';
 import WebsiteVisitors from 'components/sections/dashboard/Home/Sales/WebsiteVisitors/WebsiteVisitors';
 import BuyersProfile from 'components/sections/dashboard/Home/Sales/BuyersProfile/BuyersProfile';
 import NewCustomers from 'components/sections/dashboard/Home/Sales/NewCustomers/NewCustomers';
-import Revenue from 'components/sections/dashboard/Home/Sales/Revenue/Revenue';
+import Revenue from 'components/sections/dashboard/Home/Sales/StudentChart/Student';
 
 import { drawerWidth } from 'layouts/main-layout';
 
