@@ -57,6 +57,9 @@ const FileDropzone: React.FC<{ setFile: (file: FileWithName | null) => void }> =
         boxShadow: 1,
         mt: 2,
         cursor: 'pointer',
+        width: '100%',
+        maxWidth: 400,
+        mx: 'auto',
       }}
     >
       <input {...getInputProps()} />
@@ -80,32 +83,30 @@ const FileUpload: React.FC = () => {
     setSelectedFile(null);
   };
 
-const handleUpload = async () => {
-  if (selectedFile) {
-    try {
-      const response = await uploadFileMutation(selectedFile);
-      console.log(response);
-      if (response.data && response.data.message) {
-        toast.success(response.data.message, { position: "top-center" }); // Update toast text
-      } else {
-        toast.error('Unknown response from server!', { position: "top-center" });
+  const handleUpload = async () => {
+    if (selectedFile) {
+      try {
+        const response = await uploadFileMutation(selectedFile);
+        console.log(response);
+        if (response.data && response.data.message) {
+          toast.success(response.data.message, { position: "top-center" });
+        } else {
+          toast.error('Unknown response from server!', { position: "top-center" });
+        }
+        setSelectedFile(null);
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          toast.error(error.response.data.error, { position: "top-center" });
+        } else if (error.message) {
+          toast.error(error.message, { position: "top-center" });
+        } else {
+          toast.error('Error uploading file!', { position: "top-center" });
+        }
       }
-      setSelectedFile(null);
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        toast.error(error.response.data.error, { position: "top-center" }); // Display error message from server
-      } else if (error.message) {
-        toast.error(error.message, { position: "top-center" }); // Display generic error message
-      } else {
-        toast.error('Error uploading file!', { position: "top-center" });
-      }
+    } else {
+      toast.error('No file selected!', { position: "top-center" });
     }
-  } else {
-    toast.error('No file selected!', { position: "top-center" });
-  }
-};
-
-  
+  };
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -122,17 +123,19 @@ const handleUpload = async () => {
 
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={12} sm={8} md={6}>
+      <Grid item xs={12}>
         <Box
           sx={{
-            border: '2px dashed #90caf9',
-            borderRadius: '8px',
             p: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             bgcolor: 'background.paper',
             boxShadow: 1,
+            borderRadius: '8px',
+            width: '100%',
+            maxWidth: 400,
+            mx: 'auto',
           }}
         >
           <FileDropzone setFile={setSelectedFile} />

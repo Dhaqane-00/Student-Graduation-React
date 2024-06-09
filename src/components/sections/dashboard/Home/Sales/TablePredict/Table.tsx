@@ -8,6 +8,7 @@ import {
   Typography,
   debounce,
   IconButton,
+  Box,
 } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlotsComponent, useGridApiRef } from '@mui/x-data-grid';
 import IconifyIcon from 'components/base/IconifyIcon';
@@ -26,8 +27,7 @@ interface RowData {
 }
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID' },
-  { field: 'department', headerName: 'Department', flex: 1, minWidth: 150 },
+  { field: 'department', headerName: 'Department', flex: 1, minWidth: 250 },
   { field: 'gpa', headerName: 'GPA', flex: 0.5, minWidth: 100 },
   { field: 'gender', headerName: 'Gender', flex: 0.5, minWidth: 100 },
   { field: 'mode', headerName: 'Mode', flex: 0.75, minWidth: 120 },
@@ -125,7 +125,7 @@ const Table = (): ReactElement => {
         </Stack>
       </Stack>
       <Divider />
-      <Stack height={1} id="table-content">
+      <Box sx={{ overflowX: 'auto', height: '100%' }}>
         <DataGrid
           apiRef={apiRef}
           columns={columns}
@@ -152,11 +152,11 @@ const Table = (): ReactElement => {
             noRowsOverlay: () => <section>No rows available</section>,
           }}
           sx={{
-            height: 1,
-            width: 1,
+            height: '100%',
+            minWidth: '100%',
           }}
         />
-      </Stack>
+      </Box>
     </Stack>
   );
 };
