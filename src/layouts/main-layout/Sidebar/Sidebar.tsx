@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 import IconifyIcon from 'components/base/IconifyIcon';
-import logo from 'assets/logo/elegant-logo.png';
+import logo from 'assets/logo/Just_logo1.png';
 import Image from 'components/base/Image';
 import navItems from 'data/nav-items';
 import pxToRem from 'theme/functions/px-to-rem';
@@ -31,11 +31,11 @@ const Sidebar = (): ReactElement => {
       <Link
         href="/"
         sx={{
-          position: 'fixed',
+          // position: 'fixed',
           zIndex: 5,
-          pt: 6.25,
-          px: pxToRem(32.5),
-          pb: 3.75,
+          pt: 5,
+          px: pxToRem(20.5),
+          // pb: 3.75,
           bgcolor: 'background.paper',
           borderRadius: 5,
         }}
@@ -44,7 +44,7 @@ const Sidebar = (): ReactElement => {
       </Link>
       <Stack
         justifyContent="space-between"
-        mt={16.25}
+        mt={5}
         height={1}
         sx={{
           overflowY: 'auto',
