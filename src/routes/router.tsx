@@ -51,32 +51,8 @@ const routes = [
     ),
     children: [
       {
-        path: '',
-        element: (
-          <MainLayout>
-            <Suspense fallback={<PageLoader />}>
-              <Outlet />
-            </Suspense>
-          </MainLayout>
-        ),
-        children: [
-          {
-            path: '',
-            element: <Home />,
-          },
-          {
-            path: 'dashboard',
-            element: <Dashboard />,
-          },
-          {
-            path: 'prediction',
-            element: <Prediction />,
-          },
-          {
-            path: 'SinglePrediction',
-            element: <SinglePrediction />,
-          },
-        ],
+        path: '/',
+        element: <Login />,
       },
       {
         path: rootPaths.authRoot,
@@ -103,8 +79,36 @@ const routes = [
         ],
       },
       {
+        path: rootPaths.homeRoot,
+        element: (
+          <MainLayout>
+            <Suspense fallback={<PageLoader />}>
+              <Outlet />
+            </Suspense>
+          </MainLayout>
+        ),
+        children: [
+          {
+            path: 'home',
+            element: <Home />,
+          },
+          {
+            path: 'dashboard',
+            element: <Dashboard />,
+          },
+          {
+            path: 'prediction',
+            element: <Prediction />,
+          },
+          {
+            path: 'SinglePrediction',
+            element: <SinglePrediction />,
+          },
+        ],
+      },
+      {
         path: '*',
-        element: <Error404/>,
+        element: <Error404 />,
       },
     ],
   },

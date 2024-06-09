@@ -10,17 +10,27 @@ import {
 } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { MouseEvent, ReactElement, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import profile from 'assets/profile/profile.jpg';
 
 const AccountDropdown = (): ReactElement => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    navigate('/');
+  };
+
   return (
     <>
       <Button
@@ -72,7 +82,7 @@ const AccountDropdown = (): ReactElement => {
         </MenuItem>
         <Divider />
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogout}
           disableRipple
           disableTouchRipple
           sx={{ color: 'error.main' }}

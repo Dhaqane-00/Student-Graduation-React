@@ -28,9 +28,9 @@ interface RowData {
 
 const columns: GridColDef[] = [
   { field: 'department', headerName: 'Department', flex: 1, minWidth: 250 },
-  { field: 'gpa', headerName: 'GPA', flex: 0.5, minWidth: 100 },
-  { field: 'gender', headerName: 'Gender', flex: 0.5, minWidth: 100 },
-  { field: 'mode', headerName: 'Mode', flex: 0.75, minWidth: 120 },
+  { field: 'gpa', headerName: 'GPA', flex: 0.5, minWidth: 80 },
+  { field: 'gender', headerName: 'Gender', flex: 0.5, minWidth: 90 },
+  { field: 'mode', headerName: 'Mode', flex: 0.5, minWidth: 90 },
   { field: 'prediction', headerName: 'Prediction', flex: 0.75, minWidth: 150 },
 ];
 

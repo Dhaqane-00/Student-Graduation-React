@@ -15,7 +15,7 @@ import { drawerWidth } from 'layouts/main-layout';
 import { useLocation } from 'react-router-dom';
 import capitalizePathname from 'helpers/capitalize-pathname';
 import AccountDropdown from './AccountDropdown';
-import LanguageDropdown from './LanguageDropdown';
+// import LanguageDropdown from './LanguageDropdown';
 
 interface TopbarProps {
   handleDrawerToggle: MouseEventHandler;
@@ -55,9 +55,9 @@ const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
           }}
         >
           <Typography variant="h5" component="h5">
-            {pathname === '/' ? 'Dashboard' : title}
+            {pathname === '/home' ? 'Dashboard' : title}
           </Typography>
-          <TextField
+          {/* <TextField
             variant="outlined"
             placeholder="Search..."
             InputProps={{
@@ -69,14 +69,14 @@ const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
             }}
             fullWidth
             sx={{ maxWidth: 330 }}
-          />
+          /> */}
         </Box>
-        <IconButton
+        {/* <IconButton
           color="inherit"
           sx={{ display: { xs: 'flex', lg: 'none' }, mr: 'auto', bgcolor: 'inherit' }}
         >
           <IconifyIcon icon="mdi:search" width={24} height={24} />
-        </IconButton>
+        </IconButton> */}
         <Box
           sx={{
             display: 'flex',
@@ -84,12 +84,12 @@ const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
             alignItems: 'center',
           }}
         >
-          <LanguageDropdown />
-          <IconButton color="inherit" centerRipple sx={{ bgcolor: 'inherit' }}>
+          {/* <LanguageDropdown /> */}
+          {/* <IconButton color="inherit" centerRipple sx={{ bgcolor: 'inherit' }}>
             <Badge badgeContent={1} color="primary">
               <IconifyIcon icon="carbon:notification-filled" width={24} height={24} />
             </Badge>
-          </IconButton>
+          </IconButton> */}
           <AccountDropdown />
         </Box>
       </Toolbar>

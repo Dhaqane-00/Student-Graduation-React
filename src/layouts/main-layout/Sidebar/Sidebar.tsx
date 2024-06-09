@@ -29,7 +29,7 @@ const Sidebar = (): ReactElement => {
       }}
     >
       <Link
-        href="/"
+        href="home"
         sx={{
           // position: 'fixed',
           zIndex: 5,
