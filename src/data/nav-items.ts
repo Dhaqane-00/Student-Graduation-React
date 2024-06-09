@@ -10,7 +10,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     title: 'Home',
-    path: '/',
+    path: '/home',
     icon: 'ion:home-sharp',
     active: true,
     collapsible: false,
