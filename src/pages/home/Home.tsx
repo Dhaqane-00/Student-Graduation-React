@@ -2,12 +2,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { Stack } from '@mui/material';
 import { ReactElement } from 'react';
 
-import WebsiteVisitors from 'components/sections/dashboard/Home/Sales/WebsiteVisitors/WebsiteVisitors';
+import WebsiteVisitors from 'components/sections/dashboard/Home/Sales/TotalStudentChart/TotalStudent';
 import BuyersProfile from 'components/sections/dashboard/Home/Sales/BuyersProfile/BuyersProfile';
 import NewCustomers from 'components/sections/dashboard/Home/Sales/NewCustomers/NewCustomers';
 import Revenue from 'components/sections/dashboard/Home/Sales/StudentChart/Student';
 
 import { drawerWidth } from 'layouts/main-layout';
+import ModeStudent from 'components/sections/dashboard/Home/Sales/ModeStudentChart/ModeStudent';
 
 const Home = (): ReactElement => {
   return (
@@ -31,16 +32,8 @@ const Home = (): ReactElement => {
       <Grid xs={12} md={4}>
         <WebsiteVisitors />
       </Grid>
-      <Grid xs={12}>
-        <Stack
-          direction={{ xs: 'column', sm: 'row', lg: 'row' }}
-          gap={3.75}
-          height={1}
-          width={1}
-        >
-          <NewCustomers />
-          <BuyersProfile />
-        </Stack>
+      <Grid xs={12} md={4}>
+        <ModeStudent />
       </Grid>
     </Grid>
   );

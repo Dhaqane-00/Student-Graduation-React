@@ -1,24 +1,52 @@
 import { ReactElement, useMemo, useRef, useState } from 'react';
 import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
-import { PieDataItemOption } from 'echarts/types/src/chart/pie/PieSeries.js';
-import WebsiteVisitorsChart from './WebsiteVisitorsChart';
+import WebsiteVisitorsChart from './TotalStudentChart';
+import { useGetSummaryChartDataQuery } from 'store/api/fileApi';
 
-const WebsiteVisitors = (): ReactElement => {
+const TotalStudent = (): ReactElement => {
   const theme = useTheme();
+  const chartRef = useRef<EChartsReactCore | null>(null);
+  const [visitorType, setVisitorType] = useState<any>({
+    Direct: false,
+    Organic: false,
+    Paid: false,
+    Social: false,
+  });
 
-  const seriesData: PieDataItemOption[] = [
-    { value: 6840, name: 'Direct' },
-    { value: 3960, name: 'Organic' },
-    { value: 2160, name: 'Paid' },
-    { value: 5040, name: 'Social' },
+  // Fetch summary chart data
+  const { data: summaryData, isLoading } = useGetSummaryChartDataQuery(null);
+
+  // Extract totals from the summary data
+  const totalMaleGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
+    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Male')
+    ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
+
+  const totalFemaleGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
+    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Female')
+    ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
+
+  const totalMaleDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
+    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Male')
+    ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
+
+  const totalFemaleDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
+    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Female')
+    ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
+
+  // Create seriesData for the pie chart
+  const seriesData = [
+    { value: totalMaleGraduated, name: 'Male Graduated' },
+    { value: totalFemaleGraduated, name: 'Female Graduated' },
+    { value: totalMaleDropout, name: 'Male Dropout' },
+    { value: totalFemaleDropout, name: 'Female Dropout' },
   ];
 
   const legendData = [
-    { name: 'Direct', icon: 'circle' },
-    { name: 'Organic', icon: 'circle' },
-    { name: 'Paid', icon: 'circle' },
-    { name: 'Social', icon: 'circle' },
+    { name: 'Male Graduated', icon: 'circle' },
+    { name: 'Female Graduated', icon: 'circle' },
+    { name: 'Male Dropout', icon: 'circle' },
+    { name: 'Female Dropout', icon: 'circle' },
   ];
 
   const pieChartColors = [
@@ -28,24 +56,15 @@ const WebsiteVisitors = (): ReactElement => {
     theme.palette.error.main,
   ];
 
-  const chartRef = useRef<EChartsReactCore | null>(null);
   const onChartLegendSelectChanged = (name: string) => {
-    console.log(chartRef.current?.getEchartsInstance().getOption());
     if (chartRef.current) {
       const instance = chartRef.current.getEchartsInstance();
-      console.log(instance.getOption());
       instance.dispatchAction({
         type: 'legendToggleSelect',
         name: name,
       });
     }
   };
-  const [visitorType, setVisitorType] = useState<any>({
-    Direct: false,
-    Organic: false,
-    Paid: false,
-    Social: false,
-  });
 
   const toggleClicked = (name: string) => {
     setVisitorType((prevState: any) => ({
@@ -53,9 +72,10 @@ const WebsiteVisitors = (): ReactElement => {
       [name]: !prevState[name],
     }));
   };
+
   const totalVisitors = useMemo(
     () => seriesData.reduce((acc: number, next: any) => acc + next.value, 0),
-    [],
+    [seriesData]
   );
 
   return (
@@ -67,7 +87,7 @@ const WebsiteVisitors = (): ReactElement => {
       }}
     >
       <Typography variant="subtitle1" color="text.primary" p={2.5}>
-        Website Visitors
+        Total Students
       </Typography>
       <WebsiteVisitorsChart
         chartRef={chartRef}
@@ -124,4 +144,4 @@ const WebsiteVisitors = (): ReactElement => {
   );
 };
 
-export default WebsiteVisitors;
+export default TotalStudent;
