@@ -14,7 +14,7 @@ type WebsiteVisitorsChartProps = {
   sx?: SxProps;
 };
 
-const WebsiteVisitorsChart = ({
+const TotalStudentChart = ({
   chartRef,
   seriesData,
   legendData,
@@ -35,7 +35,7 @@ const WebsiteVisitorsChart = ({
     },
     series: [
       {
-        name: 'Website Visitors',
+        name: 'Total Students',
         type: 'pie',
         radius: ['65%', '80%'],
         avoidLabelOverlap: true,
@@ -53,7 +53,7 @@ const WebsiteVisitorsChart = ({
         emphasis: {
           label: {
             show: true,
-            fontSize: 30,
+            fontSize: 15,
             fontWeight: 'bold',
             formatter: `{b}`,
           },
@@ -69,4 +69,4 @@ const WebsiteVisitorsChart = ({
   return <ReactEchart ref={chartRef} option={option} echarts={echarts} {...rest} />;
 };
 
-export default WebsiteVisitorsChart;
+export default TotalStudentChart;
