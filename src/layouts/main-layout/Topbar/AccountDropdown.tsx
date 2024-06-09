@@ -37,7 +37,7 @@ const AccountDropdown = (): ReactElement => {
       >
         <Avatar alt="Remy Sharp" src={profile} sx={{ width: 45, height: 45 }} />
         <Typography variant="body1" component="p" color="text.primary">
-          Aiden Max
+          Mohamed Aidarus
         </Typography>
         <IconifyIcon icon="ion:caret-down-outline" width={24} height={24} color="text.primary" />
       </Button>

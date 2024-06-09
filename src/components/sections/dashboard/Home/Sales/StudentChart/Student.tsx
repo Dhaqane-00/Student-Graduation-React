@@ -88,7 +88,7 @@ const Student = (): ReactElement => {
         padding={3.75}
       >
         <Typography variant="h5" color="text.primary">
-          Student Performance
+          Student Graduation Rate
         </Typography>
       </Stack>
       <Box flex={1}>
