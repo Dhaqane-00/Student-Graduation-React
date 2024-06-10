@@ -1,13 +1,13 @@
 import { PaletteOptions } from '@mui/material';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke, white, cream } from './colors';
+import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from './colors';
 import { green, yellow } from '@mui/material/colors';
 
 const palette: PaletteOptions = {
   primary: {
-    main: orange[500],
+    main: blue[700],
   },
   secondary: {
-    main: caribbeanGreen[500],
+    main: green[600],
   },
   info: {
     main: downy[500],
@@ -27,7 +27,7 @@ const palette: PaletteOptions = {
     focus: smoke[100],
     // hover: white[300],
     disabled: smoke[400],
-    active: white[300],
+    active: white[50],
   },
   background: {
     default: cream[500],

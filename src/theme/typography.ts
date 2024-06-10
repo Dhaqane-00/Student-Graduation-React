@@ -27,6 +27,7 @@ const typography: TypographyOptions = {
     fontSize: pxToRem(20),
     fontWeight: 500,
     fontFamily: 'IBM Plex Sans',
+    color: 'black',
   },
   h6: {
     fontSize: pxToRem(18),

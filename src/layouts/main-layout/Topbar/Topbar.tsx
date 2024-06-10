@@ -15,6 +15,7 @@ import { drawerWidth } from 'layouts/main-layout';
 import { useLocation } from 'react-router-dom';
 import capitalizePathname from 'helpers/capitalize-pathname';
 import AccountDropdown from './AccountDropdown';
+import { theme } from 'theme/theme';
 // import LanguageDropdown from './LanguageDropdown';
 
 interface TopbarProps {
@@ -22,19 +23,21 @@ interface TopbarProps {
 }
 
 const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
-  const { pathname } = useLocation();
+  let { pathname } = useLocation();
   const title = capitalizePathname(pathname);
 
   return (
     <AppBar
       sx={{
-        width: { lg: `calc(100% - ${drawerWidth}px + 24px)` },
+        width: { lg: `calc(100% - ${drawerWidth}px + 1px)` },
         ml: { lg: `${drawerWidth}px` },
+        boxShadow:theme.shadows[3]
+        
       }}
     >
       <Toolbar
         sx={{
-          p: 3.75,
+          p: 1.5,
         }}
       >
         <IconButton
@@ -57,6 +60,9 @@ const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
           <Typography variant="h5" component="h5">
             {pathname === '/home' ? 'Dashboard' : title}
           </Typography>
+          {/* <Typography variant="h5" component="h5">
+            {pathname === '/SinglePrediction' ? 'Single Pediction' : title}
+          </Typography> */}
           {/* <TextField
             variant="outlined"
             placeholder="Search..."

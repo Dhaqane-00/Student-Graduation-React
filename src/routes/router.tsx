@@ -101,7 +101,7 @@ const routes = [
             element: <Prediction />,
           },
           {
-            path: 'SinglePrediction',
+            path: 'Single-Prediction',
             element: <SinglePrediction />,
           },
         ],

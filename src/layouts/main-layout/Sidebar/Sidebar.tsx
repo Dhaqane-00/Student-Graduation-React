@@ -8,9 +8,10 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
+import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../theme/colors';
 
 import IconifyIcon from 'components/base/IconifyIcon';
-import logo from 'assets/logo/Just_logo1.png';
+import logo from 'assets/logo/Just_logo.png';
 import Image from 'components/base/Image';
 import navItems from 'data/nav-items';
 import pxToRem from 'theme/functions/px-to-rem';
@@ -22,10 +23,12 @@ const Sidebar = (): ReactElement => {
       justifyContent="space-between"
       bgcolor="background.paper"
       height={1}
+      boxShadow={(theme) => theme.shadows[3]}
       sx={{
         overflowY: 'overlay',
         margin: 3.75,
         borderRadius: 5,
+        
       }}
     >
       <Link
@@ -77,10 +80,10 @@ const Sidebar = (): ReactElement => {
               href="/"
               sx={{
                 backgroundColor: 'background.paper',
-                color: 'primary.main',
+                color: watermelon[500],
                 ':hover': {
-                  backgroundColor: 'primary.main',
-                  color: 'common.white',
+                  // backgroundColor: watermelon[500],
+                  color: watermelon[700],
                   opacity: 1.5,
                 },
               }}

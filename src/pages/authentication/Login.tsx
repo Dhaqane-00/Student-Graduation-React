@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import loginBanner from 'assets/authentication-banners/login.png';
 import IconifyIcon from 'components/base/IconifyIcon';
-import logo from 'assets/logo/elegant-logo.png';
+import logo from 'assets/logo/Just_logo2.png';
 import Image from 'components/base/Image';
 
 const Login = (): ReactElement => {
@@ -50,12 +50,14 @@ const Login = (): ReactElement => {
         direction="row"
         bgcolor="background.paper"
         boxShadow={(theme) => theme.shadows[3]}
-        height={560}
-        width={{ md: 960 }}
+        borderRadius={10}
+        
+        height={525}
+        width={{ md: 380 }}
       >
-        <Stack width={{ md: 0.5 }} m={2.5} gap={10}>
+        <Stack width={{ md: 0.5 }} m={2.5} gap={5}>
           <Link href="" width="fit-content">
-            <Image src={logo} width={82.6} />
+            <Image src={logo} width={50.0} />
           </Link>
           <Stack component="form" onSubmit={handleSubmit} alignItems="center" gap={2.5} width={330} mx="auto">
             <Typography variant="h3">Login</Typography>
@@ -141,14 +143,14 @@ const Login = (): ReactElement => {
             <Skeleton variant="rectangular" height={1} width={1} sx={{ bgcolor: 'primary.main' }} />
           }
         >
-          <Image
+          {/* <Image
             alt="Login banner"
             src={loginBanner}
             sx={{
               width: 0.5,
               display: { xs: 'none', md: 'block' },
             }}
-          />
+          /> */}
         </Suspense>
       </Stack>
     </Stack>

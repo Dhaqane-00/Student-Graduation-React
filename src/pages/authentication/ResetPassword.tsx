@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import logo from 'assets/logo/elegant-logo.png';
+import logo from 'assets/logo/Just_logo2.png';
 import resetPassword from 'assets/authentication-banners/reset-password.png';
 import passwordUpdated from 'assets/authentication-banners/password-updated.png';
 import successTick from 'assets/authentication-banners/successTick.png';
@@ -43,15 +43,22 @@ const ResetPassword = (): ReactElement => {
 
   return (
     <Stack
+      // direction="row"
+      // bgcolor="background.paper"
+      // boxShadow={(theme) => theme.shadows[3]}
+      // height={560}
+      // width={{ md: 960 }}
       direction="row"
       bgcolor="background.paper"
       boxShadow={(theme) => theme.shadows[3]}
-      height={560}
-      width={{ md: 960 }}
+      borderRadius={10}
+      
+      height={525}
+      width={{ md: 380 }}
     >
-      <Stack width={{ md: 0.5 }} m={2.5} gap={10}>
+      <Stack width={{ md: 0.5 }} m={2.5} gap={5} >
         <Link href="/" width="fit-content">
-          <Image src={logo} width={82.6} />
+        <Image src={logo} width={50.0} />
         </Link>
         {!resetSuccessful ? (
           <Stack alignItems="center" gap={3.75} width={330} mx="auto">
@@ -150,14 +157,14 @@ const ResetPassword = (): ReactElement => {
           <Skeleton variant="rectangular" height={1} width={1} sx={{ bgcolor: 'primary.main' }} />
         }
       >
-        <Image
+        {/* <Image
           alt={resetSuccessful ? 'Reset done' : 'Login banner'}
           src={resetSuccessful ? passwordUpdated : resetPassword}
           sx={{
             width: 0.5,
             display: { xs: 'none', md: 'block' },
           }}
-        />
+        /> */}
       </Suspense>
     </Stack>
   );

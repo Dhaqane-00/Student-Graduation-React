@@ -15,6 +15,7 @@ import IconifyIcon from 'components/base/IconifyIcon';
 import { useGetResultsQuery } from 'store/api/fileApi';
 import CustomPagination from './CustomPagination';
 import { useBreakpoints } from 'providers/BreakpointsProvider';
+import { theme } from 'theme/theme';
 import * as XLSX from 'xlsx';
 
 interface RowData {
@@ -91,7 +92,13 @@ const Table = (): ReactElement => {
   if (error) return <Typography color="error">Error loading data</Typography>;
 
   return (
-    <Stack bgcolor="background.paper" borderRadius={5} width={1} height={1}>
+    <Stack
+      bgcolor="background.paper"
+      borderRadius={10}
+      width={1}
+      height={1}
+      boxShadow={theme.shadows[3]}
+    >
       <Stack
         direction={belowSmallScreen ? 'column' : 'row'}
         justifyContent="space-between"
@@ -125,7 +132,7 @@ const Table = (): ReactElement => {
         </Stack>
       </Stack>
       <Divider />
-      <Box sx={{ overflowX: 'auto', height: '100%' }}>
+      <Box sx={{ overflowX: 'auto', height: '100%' }} >
         <DataGrid
           apiRef={apiRef}
           columns={columns}
@@ -154,6 +161,9 @@ const Table = (): ReactElement => {
           sx={{
             height: '100%',
             minWidth: '100%',
+            '& .MuiDataGrid-row': {
+              borderBottom: `1px solid ${theme.palette.divider}`,
+            },
           }}
         />
       </Box>

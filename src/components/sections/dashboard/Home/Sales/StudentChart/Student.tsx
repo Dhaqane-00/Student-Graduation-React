@@ -3,6 +3,7 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
 import { useGetSummaryChartDataQuery } from 'store/api/fileApi'; // Import the hook
 import * as echarts from 'echarts';
+import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../../../../theme/colors';
 
 const Student = (): ReactElement => {
   const theme = useTheme();
@@ -44,7 +45,7 @@ const Student = (): ReactElement => {
       type: 'bar',
       data: [totalDropout],
       itemStyle: {
-        color: barChartColors[1],
+        color: watermelon[500],
       },
       barWidth: '50%',
     },

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import signupBanner from 'assets/authentication-banners/signup.png';
 import IconifyIcon from 'components/base/IconifyIcon';
-import logo from 'assets/logo/elegant-logo.png';
+import logo from 'assets/logo/Just_logo2.png';
 import Image from 'components/base/Image';
 
 const SignUp = (): ReactElement => {
@@ -23,15 +23,18 @@ const SignUp = (): ReactElement => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   return (
     <Stack
-      direction="row"
-      bgcolor="background.paper"
-      boxShadow={(theme) => theme.shadows[3]}
-      height={591}
-      width={{ md: 960 }}
+    direction="row"
+    bgcolor="background.paper"
+    boxShadow={(theme) => theme.shadows[3]}
+    borderRadius={10}
+    
+    height={600}
+    width={{ md: 380 }}
+    px={2}
     >
-      <Stack width={{ md: 0.5 }} m={2.5} gap={10}>
+      <Stack width={{ md: 0.5 }} m={1} gap={5} paddingTop={2}>
         <Link href="/" width="fit-content">
-          <Image src={logo} width={82.6} />
+        <Image src={logo} width={50.0} />
         </Link>
         <Stack alignItems="center" gap={2.5} width={330} mx="auto">
           <Typography variant="h3">Signup</Typography>
@@ -121,14 +124,14 @@ const SignUp = (): ReactElement => {
           <Skeleton variant="rectangular" height={1} width={1} sx={{ bgcolor: 'primary.main' }} />
         }
       >
-        <Image
+        {/* <Image
           alt="Signup banner"
           src={signupBanner}
           sx={{
             width: 0.5,
             display: { xs: 'none', md: 'block' },
           }}
-        />
+        /> */}
       </Suspense>
     </Stack>
   );
