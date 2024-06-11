@@ -16,6 +16,8 @@ import { useLocation } from 'react-router-dom';
 import capitalizePathname from 'helpers/capitalize-pathname';
 import AccountDropdown from './AccountDropdown';
 import { theme } from 'theme/theme';
+import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../theme/colors';
+
 // import LanguageDropdown from './LanguageDropdown';
 
 interface TopbarProps {
@@ -41,11 +43,10 @@ const Topbar = ({ handleDrawerToggle }: TopbarProps): ReactElement => {
         }}
       >
         <IconButton
-          color="inherit"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, ml: 0, display: { lg: 'none' }, bgcolor: 'inherit' }}
+          sx={{ mr: 2, ml: 0, display: { lg: 'none' }, bgcolor: 'inherit', color: black[900]  }}
         >
           <IconifyIcon icon="mdi:menu" />
         </IconButton>
