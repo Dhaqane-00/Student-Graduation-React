@@ -25,6 +25,11 @@ const AccountDropdown = (): ReactElement => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleProfile = () => {
+    navigate('/Profile');
+    setAnchorEl(null);
+  
+  };
 
   const handleLogout = () => {
     setAnchorEl(null);
@@ -68,7 +73,7 @@ const AccountDropdown = (): ReactElement => {
           </ListItemIcon>
           <ListItemText>Home</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleProfile}>
           <ListItemIcon>
             <IconifyIcon icon="mdi:account-outline" />
           </ListItemIcon>
