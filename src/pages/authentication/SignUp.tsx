@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import { useSignupMutation } from 'store/api/authApi';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import IconifyIcon from 'components/base/IconifyIcon';
-import { useNavigate } from 'react-router-dom';
 import logo from 'assets/logo/Just_logo2.png';
 import Image from 'components/base/Image';
 
@@ -27,22 +27,47 @@ const SignUp = (): ReactElement => {
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
 
   const [signupMutation, { isLoading, isError, isSuccess }] = useSignupMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (name === 'email') {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: emailPattern.test(value) ? '' : 'Email must be a valid',
+      }));
+    }
+
+    if (name === 'password') {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: value.length >= 8 ? '' : 'Password must be at least 8 characters long',
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (errors.email || errors.password) {
+      toast.error('Please fix the errors in the form');
+      return;
+    }
+
     try {
       const response = await signupMutation(formData);
       if (response.error) {
         toast.error('Sign up failed. Please try again.');
       } else {
-        toast.success('Sign up successful! Login to continue');
+        toast.success('Sign up successful! Redirecting to login...');
         setTimeout(() => {
           navigate('/authentication/login'); // Navigate to the login screen after delay
         }, 3000); // Adjust the delay time (in milliseconds) as needed
@@ -102,6 +127,7 @@ const SignUp = (): ReactElement => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                error={Boolean(errors.email)}
                 endAdornment={
                   <InputAdornment position="end" sx={{ width: 16, height: 16 }}>
                     <IconifyIcon icon="ic:baseline-email" width={1} height={1} />
@@ -112,6 +138,11 @@ const SignUp = (): ReactElement => {
                   backgroundColor: 'action.focus',
                 }}
               />
+              {errors.email && (
+                <Typography variant="body2" color="error">
+                  {errors.email}
+                </Typography>
+              )}
             </FormControl>
             <FormControl variant="standard" fullWidth>
               <InputLabel shrink htmlFor="password">
@@ -125,6 +156,7 @@ const SignUp = (): ReactElement => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                error={Boolean(errors.password)}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -146,6 +178,11 @@ const SignUp = (): ReactElement => {
                   ),
                 }}
               />
+              {errors.password && (
+                <Typography variant="body2" color="error">
+                  {errors.password}
+                </Typography>
+              )}
             </FormControl>
             <Button type="submit" variant="contained" fullWidth disabled={isLoading}>
               {isLoading ? 'Signing up...' : 'Sign up'}
@@ -167,7 +204,6 @@ const SignUp = (): ReactElement => {
             </Typography>
           </Stack>
         </Stack>
-        {/* Suspense for the image loading */}
       </Stack>
     </form>
   );
