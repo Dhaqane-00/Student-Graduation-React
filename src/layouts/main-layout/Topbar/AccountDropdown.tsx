@@ -18,6 +18,12 @@ const AccountDropdown = (): ReactElement => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : {};
+  console.log(user);
+  const { name, image } = user;
+  
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -28,7 +34,9 @@ const AccountDropdown = (): ReactElement => {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    navigate('/');
+    localStorage.removeItem('token'); // Clear token from localStorage
+    localStorage.removeItem('user'); // Clear user data from localStorage
+    navigate('/'); // Redirect to the home page
   };
 
   return (
@@ -45,9 +53,9 @@ const AccountDropdown = (): ReactElement => {
           gap: 1.875,
         }}
       >
-        <Avatar alt="Remy Sharp" src={profile} sx={{ width: 45, height: 45 }} />
+        <Avatar alt={name} src={image || profile} sx={{ width: 45, height: 45 }} />
         <Typography variant="body1" component="p" color="text.primary">
-          Mohamed Aidarus
+          {name || 'User'}
         </Typography>
         <IconifyIcon icon="ion:caret-down-outline" width={24} height={24} color="text.primary" />
       </Button>

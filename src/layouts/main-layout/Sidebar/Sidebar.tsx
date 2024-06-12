@@ -8,7 +8,7 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../theme/colors';
+import { caribbeanGreen, orange, downy, watermelon, black, smoke, blue, white, cream } from '../../../theme/colors';
 
 import IconifyIcon from 'components/base/IconifyIcon';
 import logo from 'assets/logo/Just_logo.png';
@@ -18,6 +18,11 @@ import pxToRem from 'theme/functions/px-to-rem';
 import NavButton from './NavButton';
 
 const Sidebar = (): ReactElement => {
+  const handleLogout = () => {
+    // Clear localStorage when logging out
+    localStorage.clear();
+  };
+
   return (
     <Stack
       justifyContent="space-between"
@@ -28,17 +33,14 @@ const Sidebar = (): ReactElement => {
         overflowY: 'overlay',
         margin: 3.75,
         borderRadius: 5,
-        
       }}
     >
       <Link
         href="home"
         sx={{
-          // position: 'fixed',
           zIndex: 5,
           pt: 5,
           px: pxToRem(10),
-          // pb: 3.75,
           bgcolor: 'background.paper',
           borderRadius: 5,
         }}
@@ -78,11 +80,11 @@ const Sidebar = (): ReactElement => {
             <ListItemButton
               LinkComponent={Link}
               href="/"
+              onClick={handleLogout} // Call handleLogout when logging out
               sx={{
                 backgroundColor: 'background.paper',
                 color: watermelon[500],
                 ':hover': {
-                  // backgroundColor: watermelon[500],
                   color: watermelon[700],
                   opacity: 1.5,
                 },
