@@ -20,10 +20,8 @@ const ResetPassword = (): ReactElement => {
       if (response.error) {
         toast.error('Error sending reset password email');
       } else {
-        toast.success('Reset password email sent successfully');
-        setTimeout(() => {
-          navigate('/authentication/login'); // Navigate to the login screen after delay
-        }, 3000); // Adjust the delay time (in milliseconds) as needed
+        toast.success('Reset password email sent successfully to ' + email + '  Check your inbox.');
+        
       }
     } catch (error) {
       console.error('Forgot password error:', error);
@@ -64,7 +62,7 @@ const ResetPassword = (): ReactElement => {
             />
           </FormControl>
           <Button variant="contained" fullWidth onClick={handleResetPassword} disabled={isLoading}>
-            {isLoading ? 'Sending Email...' : 'Reset Password'}
+            {isLoading ? 'Sending Email...' : 'Send'}
           </Button>
           <Typography variant="body2" color="text.secondary">
             Back to{' '}

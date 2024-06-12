@@ -28,6 +28,7 @@ const Dashboard = lazy(() => import('pages/home/Dashboard'));
 const Home = lazy(() => import('pages/home/Home'));
 const Prediction = lazy(() => import('pages/prediction/Predictions'));
 const SinglePrediction = lazy(() => import('pages/SinglePredictio/SinglePrediction'));
+const ConfirmPassword = lazy(() => import('pages/authentication/ConfirmPassword'));
 
 const Login = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -76,6 +77,10 @@ const routes = [
             path: paths.resetPassword,
             element: <ResetPassword />,
           },
+          {
+            path: paths.confirmPassword,
+            element: <ConfirmPassword />,
+          }
         ],
       },
       {

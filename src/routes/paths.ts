@@ -3,6 +3,7 @@ export const rootPaths = {
   pagesRoot: 'pages',
   prediction: '/prediction',
   SinglePrediction: '/Single-Prediction',
+
   applicationsRoot: 'applications',
   ecommerceRoot: 'ecommerce',
   authRoot: 'authentication',
@@ -21,5 +22,6 @@ export default {
   login: `/${rootPaths.authRoot}/login`,
   signup: `/${rootPaths.authRoot}/sign-up`,
   resetPassword: `/${rootPaths.authRoot}/reset-password`,
+  confirmPassword: `/${rootPaths.authRoot}/confirm-password`,
   404: `/${rootPaths.errorRoot}/404`,
 };
