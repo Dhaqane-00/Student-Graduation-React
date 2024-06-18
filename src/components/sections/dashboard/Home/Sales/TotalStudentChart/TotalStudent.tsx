@@ -8,45 +8,43 @@ const TotalStudent = (): ReactElement => {
   const theme = useTheme();
   const chartRef = useRef<EChartsReactCore | null>(null);
   const [visitorType, setVisitorType] = useState<any>({
-    Direct: false,
-    Organic: false,
-    Paid: false,
-    Social: false,
+    Fulltime: false,
+    Parttime: false,
   });
 
   // Fetch summary chart data
   const { data: summaryData, isLoading } = useGetSummaryChartDataQuery(null);
 
   // Extract totals from the summary data
-  const totalMaleGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
-    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Male')
+  const totalFulltimeGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
+    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Fulltime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
-  const totalFemaleGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
-    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Female')
+  const totalParttimeGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
+    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Parttime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
-  const totalMaleDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
-    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Male')
+  const totalFulltimeDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
+    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Fulltime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
-  const totalFemaleDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
-    ?.genders?.filter((gender: { Gender: string; }) => gender.Gender === 'Female')
+  const totalParttimeDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
+    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Parttime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
   // Create seriesData for the pie chart
   const seriesData = [
-    { value: totalMaleGraduated, name: 'Male Graduated' },
-    { value: totalFemaleGraduated, name: 'Female Graduated' },
-    { value: totalMaleDropout, name: 'Male Dropout' },
-    { value: totalFemaleDropout, name: 'Female Dropout' },
+    { value: totalFulltimeGraduated, name: 'Fulltime Graduated' },
+    { value: totalParttimeGraduated, name: 'Parttime Graduated' },
+    { value: totalFulltimeDropout, name: 'Fulltime Dropout' },
+    { value: totalParttimeDropout, name: 'Parttime Dropout' },
   ];
 
   const legendData = [
-    { name: 'Male Graduated', icon: 'circle' },
-    { name: 'Female Graduated', icon: 'circle' },
-    { name: 'Male Dropout', icon: 'circle' },
-    { name: 'Female Dropout', icon: 'circle' },
+    { name: 'Fulltime Graduated', icon: 'circle' },
+    { name: 'Parttime Graduated', icon: 'circle' },
+    { name: 'Fulltime Dropout', icon: 'circle' },
+    { name: 'Parttime Dropout', icon: 'circle' },
   ];
 
   const pieChartColors = [

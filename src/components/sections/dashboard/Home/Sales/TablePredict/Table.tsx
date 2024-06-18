@@ -21,17 +21,23 @@ import * as XLSX from 'xlsx';
 interface RowData {
   id: string;
   department: string;
-  gpa: string;
+  totalGpa: string;
   gender: string;
   mode: string;
+  totalAttendance: string;
+  discounts: number;
+  noReExams: number;
   prediction: string;
 }
 
 const columns: GridColDef[] = [
   { field: 'department', headerName: 'Department', flex: 1, minWidth: 250 },
-  { field: 'gpa', headerName: 'GPA', flex: 0.5, minWidth: 80 },
+  { field: 'discounts', headerName: 'Discounts', type: 'number', flex: 0.5, minWidth: 90 },
+  { field: 'noReExams', headerName: 'No. of Re-exams', type: 'number', flex: 0.5, minWidth: 150 },
   { field: 'gender', headerName: 'Gender', flex: 0.5, minWidth: 90 },
   { field: 'mode', headerName: 'Mode', flex: 0.5, minWidth: 90 },
+  { field: 'totalGpa', headerName: 'GPA', flex: 0.5, minWidth: 80 },
+  { field: 'totalAttendance', headerName: 'Total Attendance', flex: 0.5, minWidth: 150 },
   { field: 'prediction', headerName: 'Prediction', flex: 0.75, minWidth: 150 },
 ];
 
@@ -43,14 +49,28 @@ const Table = (): ReactElement => {
   const { down } = useBreakpoints();
   const belowSmallScreen = down('sm');
 
+  const calculateAverage = (values: number[]) => {
+    const validValues = values.filter(value => !isNaN(value));
+    return validValues.length > 0 ? (validValues.reduce((a, b) => a + b, 0) / validValues.length).toFixed(2) : '0';
+  };
+
   const rows = useMemo(() => {
     if (!data) return [];
-    return data.results.map((item: { _id: string; Department: string; GPA: string; Gender: string; Mode: string; Prediction: string; }): RowData => ({
+    return data.results.map((item: any) => ({
       id: item._id,
       department: item.Department,
-      gpa: item.GPA,
-      gender: item.Gender,
+      totalGpa: calculateAverage([
+        item['GPA-S1'], item['GPA-S2'], item['GPA-S3'], item['GPA-S4'], item['GPA-S5'],
+        item['GPA-S6'], item['GPA-S7'], item['GPA-S8']
+      ]),
+      gender: item.Sex,
       mode: item.Mode,
+      totalAttendance: calculateAverage([
+        item['Att-S1'], item['Att-S2'], item['Att-S3'], item['Att-S4'], item['Att-S5'],
+        item['Att-S6'], item['Att-S7'], item['Att-S8']
+      ]),
+      discounts: item.Discounts || 0,
+      noReExams: item['NO-Re-exams'] || 0,
       prediction: item.Prediction,
     }));
   }, [data]);
@@ -61,11 +81,14 @@ const Table = (): ReactElement => {
 
   const handleGridSearch = useMemo(() => {
     return debounce((searchValue: string) => {
-      apiRef.current.setQuickFilterValues(
-        searchValue.split(' ').filter((word: string) => word !== ''),
+      const filteredData = rows.filter((row: { [s: string]: unknown; } | ArrayLike<unknown>) =>
+        Object.values(row).some(value =>
+          String(value).toLowerCase().includes(searchValue.toLowerCase())
+        )
       );
-    }, 250);
-  }, [apiRef]);
+      setFilteredRows(filteredData);
+    }, 300);
+  }, [rows]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.currentTarget.value;
@@ -83,7 +106,7 @@ const Table = (): ReactElement => {
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 5000); // Adjust the polling interval as per your requirement
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [refetch]);
@@ -132,7 +155,7 @@ const Table = (): ReactElement => {
         </Stack>
       </Stack>
       <Divider />
-      <Box sx={{ overflowX: 'auto', height: '100%' }} >
+      <Box sx={{ overflowX: 'auto', height: '100%' }}>
         <DataGrid
           apiRef={apiRef}
           columns={columns}

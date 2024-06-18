@@ -5,9 +5,12 @@ import { useSinglePredictMutation } from 'store/api/fileApi'; // Adjust the impo
 const PredictSingle = () => {
   const [formData, setFormData] = useState({
     Department: '',
-    Gender: '',
+    Sex: '',
     Mode: '',
-    GPA: '',
+    T_Att: '',
+    Discounts: '',
+    NO_Re_exams: '',
+    CGPA: '',
   });
 
   const [singlePredict, { data, error, isLoading }] = useSinglePredictMutation();
@@ -44,18 +47,29 @@ const PredictSingle = () => {
           fullWidth
           required
         >
-          <MenuItem value="Computer_Application">Computer Application</MenuItem>
+          <MenuItem value="Computer-Application">Computer Application</MenuItem>
           <MenuItem value="Pharmacology">Pharmacology</MenuItem>
-          <MenuItem value="Computer_Networking_and_Security">Computer Networking and Security</MenuItem>
-          <MenuItem value="Medical_Laboratory_Science">Medical Laboratory Science</MenuItem>
+          <MenuItem value="Computer-Networking-and-Security">Computer Networking and Security</MenuItem>
+          <MenuItem value="Medical-Laboratory-Science">Medical Laboratory Science</MenuItem>
+          <MenuItem value="Accounting-and-Finance">Accounting and Finance</MenuItem>
+          <MenuItem value="Banking-and-Finance">Banking and Finance </MenuItem>
+          <MenuItem value="Business-Administration">Business Administration</MenuItem>
+          <MenuItem value="Civil-Engineering">Civil Engineering</MenuItem>
+          <MenuItem value="Economics">Economics </MenuItem>
+          <MenuItem value="Pharmacology"> Pharmacology</MenuItem>
+          <MenuItem value="Public-Administration ">Public Administration</MenuItem>
+          <MenuItem value="Computer-Multimedia">Computer Multimedia</MenuItem>
+          <MenuItem value="Electrical-and-Electronics">Electrical Engineering</MenuItem>
+          <MenuItem value="Pharmacology">Pharmacology</MenuItem>
+          
         </TextField>
 
         <TextField
           margin="dense"
           select
-          label="Gender"
-          name="Gender"
-          value={formData.Gender}
+          label="Sex"
+          name="Sex"
+          value={formData.Sex}
           onChange={handleChange}
           fullWidth
           required
@@ -63,6 +77,7 @@ const PredictSingle = () => {
           <MenuItem value="Male">Male</MenuItem>
           <MenuItem value="Female">Female</MenuItem>
         </TextField>
+
         <TextField
           margin="dense"
           select
@@ -76,30 +91,68 @@ const PredictSingle = () => {
           <MenuItem value="Fulltime">Fulltime</MenuItem>
           <MenuItem value="Parttime">Parttime</MenuItem>
         </TextField>
+
         <TextField
           margin="dense"
-          label="GPA"
-          name="GPA"
+          label="T_Att"
+          name="T_Att"
           type="number"
-          
-          value={formData.GPA}
+          inputProps={{ step: 0.01, min: 0, max: 100 }}
+          value={formData.T_Att}
           onChange={handleChange}
           fullWidth
           required
         />
+
+        <TextField
+          margin="dense"
+          label="Discounts"
+          name="Discounts"
+          type="number"
+          inputProps={{ step: 0.01, min: 0, max: 100 }}
+          value={formData.Discounts}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+
+        <TextField
+          margin="dense"
+          label="NO_Re_exams"
+          name="NO_Re_exams"
+          inputProps={{ step: 0.01, min: 0, max: 45 }}
+          type="number"
+          value={formData.NO_Re_exams}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+
+        <TextField
+          margin="dense"
+          label="CGPA"
+          name="CGPA"
+          type="number"
+          inputProps={{ step: 0.01, min: 0, max: 100 }}
+          value={formData.CGPA}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+
         <Button type="submit" variant="contained" color="primary" disabled={isLoading}>
           {isLoading ? 'Predicting...' : 'Predict'}
         </Button>
       </form>
       {data && (
-        <Box mt={2}>
+        <Box mt={2} sx={{ textAlign: 'center' }}>
           <h3>Prediction Result</h3>
           <p>{data.prediction}</p>
         </Box>
       )}
       {error && (
         <Box mt={2} color="red">
-          <p>Error: {}</p>
+          <p>Error: {/*Missing Error Hadling Note It*/}</p>
         </Box>
       )}
     </Box>
