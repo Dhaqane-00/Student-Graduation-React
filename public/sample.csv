@@ -1,0 +1,12 @@
+﻿Department,Sex,Mode,Att-S1,Att-S2,Att-S3,Att-S4,Att-S5,Att-S6,Att-S7,Att-S8,Discounts,NO-Re-exams,GPA-S1,GPA-S2,GPA-S3,GPA-S4,GPA-S5,GPA-S6,GPA-S7,GPA-S8
+Accounting-and-Finance,Male,Fulltime,0.87,,,,,,,,100,4,85.67,77,,,,,,
+Banking-and-Finance,Female,Parttime,,,,,,,,,50,12,,,,,,,,
+Business-Administration,,,,,,,,,,,12,,,,,,,,,
+Civil-Engineering,,,,,,,,,,,,,,,,,,,,
+Computer-Application,,,,,,,,,,,,,,,,,,,,
+Computer-Multimedia,,,,,,,,,,,,,,,,,,,,
+Computer-Networking-and-Security,,,,,,,,,,,,,,,,,,,,
+Economics,,,,,,,,,,,,,,,,,,,,
+Electrical-and-Electronics,,,,,,,,,,,,,,,,,,,,
+Pharmacology,,,,,,,,,,,,,,,,,,,,
+Public-Administration,,,,,,,,,,,,,,,,,,,,
