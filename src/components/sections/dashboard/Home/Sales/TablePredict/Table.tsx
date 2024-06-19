@@ -42,8 +42,6 @@ interface RowData {
   GPA_S6: number;
   GPA_S7: number;
   GPA_S8: number;
-
-  
   No_ReExam_Subjects: number;
   Prediction: string;
 }
