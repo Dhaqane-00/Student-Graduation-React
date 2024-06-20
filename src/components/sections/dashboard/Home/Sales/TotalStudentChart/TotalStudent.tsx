@@ -17,19 +17,19 @@ const TotalStudent = (): ReactElement => {
 
   // Extract totals from the summary data
   const totalFulltimeGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
-    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Fulltime')
+    ?.details?.filter((details: { Mode: string; }) => details.Mode === 'Fulltime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
   const totalParttimeGraduated = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Will Graduate')
-    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Parttime')
+    ?.details?.filter((details: { Mode: string; }) => details.Mode === 'Parttime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
   const totalFulltimeDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
-    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Fulltime')
+    ?.details?.filter((details: { Mode: string; }) => details.Mode === 'Fulltime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
   const totalParttimeDropout = summaryData?.summary_data?.find((item: { _id: string; }) => item._id === 'Dropout')
-    ?.genders?.filter((gender: { Mode: string; }) => gender.Mode === 'Parttime')
+    ?.details?.filter((details: { Mode: string; }) => details.Mode === 'Parttime')
     ?.reduce((acc: any, curr: { count: any; }) => acc + curr.count, 0) || 0;
 
   // Create seriesData for the pie chart
@@ -85,7 +85,7 @@ const TotalStudent = (): ReactElement => {
       }}
     >
       <Typography variant="subtitle1" color="text.primary" p={2.5}>
-        Total Students
+        Total Students By Mode
       </Typography>
       <WebsiteVisitorsChart
         chartRef={chartRef}

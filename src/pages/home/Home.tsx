@@ -32,8 +32,8 @@ const Home = (): ReactElement => {
       <Grid xs={12} md={4}>
         <WebsiteVisitors />
       </Grid>
-      <Grid xs={12} md={4}>
-        {/* <ModeStudent /> */}
+      <Grid xs={12} md={4} lg={12}>
+        <ModeStudent />
       </Grid>
     </Grid>
   );

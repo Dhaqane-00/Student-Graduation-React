@@ -48,6 +48,13 @@ export const fileApi = createApi({
         responseHandler: (response) => response.json(), // Ensure response is parsed as JSON
       }),
     }),
+    getShollershipChartData: builder.query({
+      query: () => ({
+        url: '/Schollarship-summary',
+        method: 'GET',
+        responseHandler: (response) => response.json(), // Ensure response is parsed as JSON
+      }),
+    }),
   }),
 });
 
@@ -57,5 +64,6 @@ export const {
   useSinglePredictMutation,
   useGetChartDataQuery,
   useGetSummaryChartDataQuery,
+  useGetShollershipChartDataQuery,
 } = fileApi;
 export default fileApi.reducer;

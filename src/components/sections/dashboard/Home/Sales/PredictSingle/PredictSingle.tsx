@@ -94,7 +94,7 @@ const PredictSingle = () => {
 
         <TextField
           margin="dense"
-          label="T_Att"
+          label="Total Attendance"
           name="T_Att"
           type="number"
           inputProps={{ step: 0.01, min: 0, max: 100 }}
@@ -106,7 +106,7 @@ const PredictSingle = () => {
 
         <TextField
           margin="dense"
-          label="Discounts"
+          label="Scholarship"
           name="Discounts"
           type="number"
           inputProps={{ step: 0.01, min: 0, max: 100 }}
@@ -118,7 +118,7 @@ const PredictSingle = () => {
 
         <TextField
           margin="dense"
-          label="NO_Re_exams"
+          label="Number Of Re-exams"
           name="NO_Re_exams"
           inputProps={{ step: 0.01, min: 0, max: 45 }}
           type="number"
