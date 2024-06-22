@@ -11,27 +11,12 @@ import {
 import IconifyIcon from 'components/base/IconifyIcon';
 import { ReactElement, useRef, useState } from 'react';
 import EChartsReactCore from 'echarts-for-react/lib/core';
-import BuyersProfileChart from './BuyersProfileChart';
+import BuyersProfileChart from './DepartmentChart';
 import { PieDataItemOption } from 'echarts/types/src/chart/pie/PieSeries.js';
+import { useGetDepartmentDataQuery } from 'store/api/fileApi'; // Adjust the path as per your project structure
 
-const BuyersProfile = (): ReactElement => {
+const Department = (): ReactElement => {
   const theme = useTheme();
-  const seriesData: PieDataItemOption[] = [
-    { value: 50, name: 'Male' },
-    { value: 35, name: 'Female' },
-    { value: 15, name: 'Others' },
-  ];
-  const legendData = [
-    { name: 'Male', icon: 'circle' },
-    { name: 'Female', icon: 'circle' },
-    { name: 'Others', icon: 'circle' },
-  ];
-  const pieChartColors = [
-    theme.palette.primary.main,
-    theme.palette.secondary.main,
-    theme.palette.error.main,
-  ];
-
   const chartRef = useRef<EChartsReactCore | null>(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -47,13 +32,50 @@ const BuyersProfile = (): ReactElement => {
       [name]: !prevState[name],
     }));
   };
+
   const handleClick = (event: any) => {
-    setAnchorEl(event.target);
+    setAnchorEl(event.currentTarget); // Fix: use currentTarget instead of target
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  // Fetch department data using custom hook
+  const { data, error, isLoading } = useGetDepartmentDataQuery(null);
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>Error fetching data: {}</Typography>;
+
+  // Process department data to display
+  const departments = data?.department_summary || [];
+
+  // Prepare data for chart
+  const seriesData: PieDataItemOption[] = departments.map((dept: { total: any; _id: any; }) => ({
+    value: dept.total,
+    name: dept._id,
+  }));
+
+  // Function to get prediction count for a department
+  const getPredictionCount = (department: any, prediction: string) => {
+    const predictionData = department.predictions.find(
+      (pred: any) => pred.Prediction === prediction
+    );
+    return predictionData ? predictionData.count : 0;
+  };
+
+  // Prepare legend data and colors for the chart
+  const legendData = [
+    { name: 'Will Graduate', icon: 'circle' },
+    { name: 'Dropout', icon: 'circle' },
+  ];
+  const pieChartColors = [
+    theme.palette.primary.main,
+    theme.palette.error.main,
+    
+  ];
+
+  // Function to handle legend selection change
   const onChartLegendSelectChanged = (name: string) => {
     if (chartRef.current) {
       const instance = chartRef.current.getEchartsInstance();
@@ -70,12 +92,13 @@ const BuyersProfile = (): ReactElement => {
         bgcolor: 'common.white',
         borderRadius: 5,
         height: 1,
+        width:1250,
         flex: '1 1 auto',
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center" padding={2.5}>
         <Typography variant="subtitle1" color="text.primary">
-          Buyers Profile
+          Department Students
         </Typography>
         <IconButton
           id="basic-button"
@@ -120,7 +143,6 @@ const BuyersProfile = (): ReactElement => {
       </Stack>
       <Stack
         direction={{ xs: 'row', sm: 'column', md: 'row' }}
-        // direction={'row'}
         alignItems="center"
         justifyContent="space-between"
         flex={1}
@@ -136,9 +158,8 @@ const BuyersProfile = (): ReactElement => {
             display: 'flex',
             justifyContent: 'center',
             flex: '1 1 0%',
-            // width: 0.5,
             width: 177,
-            maxHeight: 177,
+            maxHeight: 500,
           }}
         />
         <Stack
@@ -148,54 +169,54 @@ const BuyersProfile = (): ReactElement => {
             flex: 1,
           }}
         >
-          {Array.isArray(seriesData) &&
-            seriesData.map((dataItem, index) => (
-              <Button
-                key={dataItem.name}
-                variant="text"
-                fullWidth
-                onClick={() => {
-                  toggleClicked(dataItem.name as string);
-                  onChartLegendSelectChanged(dataItem.name as string);
-                }}
-                sx={{
-                  justifyContent: 'flex-start',
-                  padding: 0,
-                  pr: 1,
-                  borderRadius: 1,
-                  bgcolor: buyerGenderType[`${dataItem.name}`]
-                    ? 'action.focus'
-                    : 'background.paper',
-                  ':hover': {
-                    bgcolor: 'action.active',
-                  },
-                }}
-                disableRipple
-              >
-                <Stack direction="row" alignItems="center" gap={1} width={1}>
-                  <Box
-                    sx={{
-                      width: 10,
-                      height: 10,
-                      backgroundColor: buyerGenderType[`${dataItem.name}`]
-                        ? 'action.disabled'
-                        : pieChartColors[index],
-                      borderRadius: 400,
-                    }}
-                  />
-                  <Typography variant="body1" color="text.secondary" textAlign="left" flex={1}>
-                    {dataItem.name}
-                  </Typography>
-                  <Typography variant="body1" color="text.primary">
-                    {dataItem.value}%
-                  </Typography>
-                </Stack>
-              </Button>
-            ))}
+          {departments.map((dept: any) => (
+            <Button
+              key={dept._id}
+              variant="text"
+              fullWidth
+              onClick={() => {
+                toggleClicked(dept._id);
+                onChartLegendSelectChanged(dept._id);
+              }}
+              sx={{
+                justifyContent: 'flex-start',
+                padding: 0,
+                pr: 1,
+                borderRadius: 1,
+                bgcolor: buyerGenderType[dept._id] ? 'action.focus' : 'background.paper',
+                ':hover': {
+                  bgcolor: 'action.active',
+                },
+              }}
+              disableRipple
+            >
+              <Stack direction="row" alignItems="center" gap={1} width={1}>
+                <Box
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    backgroundColor: buyerGenderType[dept._id]
+                      ? 'action.disabled'
+                      : pieChartColors[0], // Assuming using the color for "Will Graduate"
+                    borderRadius: 400,
+                  }}
+                />
+                <Typography variant="body1" color="text.secondary" textAlign="left" flex={1}>
+                  {dept._id}
+                </Typography>
+                <Typography variant="body1" color="text.primary">
+                  Will Graduate: {getPredictionCount(dept, 'Will Graduate')}
+                </Typography>
+                <Typography variant="body1" color="text.primary">
+                  Dropout: {getPredictionCount(dept, 'Dropout')}
+                </Typography>
+              </Stack>
+            </Button>
+          ))}
         </Stack>
       </Stack>
     </Stack>
   );
 };
 
-export default BuyersProfile;
+export default Department;

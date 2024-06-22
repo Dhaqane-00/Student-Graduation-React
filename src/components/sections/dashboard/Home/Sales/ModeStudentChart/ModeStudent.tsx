@@ -8,7 +8,12 @@ const ModeStudent = (): ReactElement => {
   const theme = useTheme();
   const chartRef = useRef<EChartsReactCore | null>(null);
 
-  const barChartColors = [theme.palette.secondary.main, theme.palette.primary.main];
+  const barChartColors = [
+    theme.palette.secondary.main,
+    theme.palette.primary.main,
+    theme.palette.secondary.light,
+    theme.palette.primary.light
+  ];
 
   // Fetch scholarship summary data
   const { data, error, isLoading } = useGetShollershipChartDataQuery(null);
@@ -41,47 +46,43 @@ const ModeStudent = (): ReactElement => {
   const withoutGraduationPercentage = totalWithoutScholarship ? ((withoutScholarshipGraduation / totalWithoutScholarship) * 100).toFixed(2) : '0';
   const withoutDropoutPercentage = totalWithoutScholarship ? ((withoutScholarshipDropout / totalWithoutScholarship) * 100).toFixed(2) : '0';
 
-  const hasWithoutScholarshipData = withoutScholarshipGraduation > 0 || withoutScholarshipDropout > 0;
-
   const seriesData = [
     {
       name: 'Graduates with Scholarship',
       type: 'bar',
+      stack: 'students',
       data: [withScholarshipGraduation],
       itemStyle: {
         color: barChartColors[0],
       },
-      barWidth: '30%',
     },
     {
       name: 'Dropouts with Scholarship',
       type: 'bar',
+      stack: 'students',
       data: [withScholarshipDropout],
       itemStyle: {
         color: barChartColors[1],
       },
-      barWidth: '30%',
     },
-    ...(hasWithoutScholarshipData ? [
-      {
-        name: 'Graduates without Scholarship',
-        type: 'bar',
-        data: [withoutScholarshipGraduation],
-        itemStyle: {
-          color: barChartColors[0],
-        },
-        barWidth: '30%',
+    {
+      name: 'Graduates without Scholarship',
+      type: 'bar',
+      stack: 'students',
+      data: [withoutScholarshipGraduation],
+      itemStyle: {
+        color: barChartColors[2],
       },
-      {
-        name: 'Dropouts without Scholarship',
-        type: 'bar',
-        data: [withoutScholarshipDropout],
-        itemStyle: {
-          color: barChartColors[1],
-        },
-        barWidth: '30%',
-      }
-    ] : [])
+    },
+    {
+      name: 'Dropouts without Scholarship',
+      type: 'bar',
+      stack: 'students',
+      data: [withoutScholarshipDropout],
+      itemStyle: {
+        color: barChartColors[3],
+      },
+    },
   ];
 
   const option = {
@@ -92,18 +93,29 @@ const ModeStudent = (): ReactElement => {
       },
     },
     legend: {
-      data: hasWithoutScholarshipData 
-        ? ['Graduates with Scholarship', 'Dropouts with Scholarship', 'Graduates without Scholarship', 'Dropouts without Scholarship']
-        : ['Graduates with Scholarship', 'Dropouts with Scholarship'],
-    },
-    xAxis: {
-      type: 'category',
-      data: ['With Scholarship', ...(hasWithoutScholarshipData ? ['Without Scholarship'] : [])],
+      data: [
+        'Graduates with Scholarship',
+        'Dropouts with Scholarship',
+        'Graduates without Scholarship',
+        'Dropouts without Scholarship'
+      ],
     },
     yAxis: {
-      type: 'value',
+      type: 'category', // Use 'category' type for horizontal bars
+      data: ['Students'],
     },
-    series: seriesData,
+    xAxis: {
+      type: 'value', // Use 'value' type for horizontal bars
+    },
+    series: seriesData.map((series) => ({
+      ...series,
+      barWidth: 30, // Adjust the width of bars as needed
+      label: {
+        show: true,
+        position: 'inside',
+        formatter: '{c}%', // Show percentage inside the bar
+      },
+    })),
   };
 
   return (
@@ -132,7 +144,7 @@ const ModeStudent = (): ReactElement => {
           ref={chartRef}
           echarts={echarts}
           option={option}
-          style={{ height: '130%', width: '100%' }}
+          style={{ height: '110%', width: '100%' }}
         />
       </Box>
       <Box padding={1.75} display="flex" justifyContent="space-around">
@@ -158,32 +170,28 @@ const ModeStudent = (): ReactElement => {
             {withDropoutPercentage}%
           </Typography>
         </Box>
-        {hasWithoutScholarshipData && (
-          <>
-            <Box textAlign="center">
-              <Typography variant="h6" color="text.primary">
-                Graduates without Scholarship
-              </Typography>
-              <Typography variant="h4" color={barChartColors[0]}>
-                {withoutScholarshipGraduation}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {withoutGraduationPercentage}%
-              </Typography>
-            </Box>
-            <Box textAlign="center">
-              <Typography variant="h6" color="text.primary">
-                Dropouts without Scholarship
-              </Typography>
-              <Typography variant="h4" color={barChartColors[1]}>
-                {withoutScholarshipDropout}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {withoutDropoutPercentage}%
-              </Typography>
-            </Box>
-          </>
-        )}
+        <Box textAlign="center">
+          <Typography variant="h6" color="text.primary">
+            Graduates without Scholarship
+          </Typography>
+          <Typography variant="h4" color={barChartColors[2]}>
+            {withoutScholarshipGraduation}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {withoutGraduationPercentage}%
+          </Typography>
+        </Box>
+        <Box textAlign="center">
+          <Typography variant="h6" color="text.primary">
+            Dropouts without Scholarship
+          </Typography>
+          <Typography variant="h4" color={barChartColors[3]}>
+            {withoutScholarshipDropout}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {withoutDropoutPercentage}%
+          </Typography>
+        </Box>
       </Box>
     </Stack>
   );

@@ -55,6 +55,13 @@ export const fileApi = createApi({
         responseHandler: (response) => response.json(), // Ensure response is parsed as JSON
       }),
     }),
+    getDepartmentData: builder.query({
+        query: () => ({
+          url: '/department-summary',
+          method: 'GET',
+          responseHandler: (response) => response.json(), // Ensure response is parsed as JSON
+        }),
+    }),
   }),
 });
 
@@ -65,5 +72,6 @@ export const {
   useGetChartDataQuery,
   useGetSummaryChartDataQuery,
   useGetShollershipChartDataQuery,
+  useGetDepartmentDataQuery,
 } = fileApi;
 export default fileApi.reducer;

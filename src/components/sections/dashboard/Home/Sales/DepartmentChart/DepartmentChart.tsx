@@ -14,7 +14,7 @@ type BuyersProfileChartProps = {
   sx?: SxProps;
 };
 
-const BuyersProfileChart = ({
+const DepartmentChart = ({
   chartRef,
   seriesData,
   legendData,
@@ -34,9 +34,9 @@ const BuyersProfileChart = ({
       },
       series: [
         {
-          name: 'Buyers Profile',
+          name: 'Total Students Of Department',
           type: 'pie',
-          radius: ['65%', '90%'],
+          radius: ['100%', '90%'],
           color: colors,
           avoidLabelOverlap: true,
           startAngle: -30,
@@ -64,4 +64,4 @@ const BuyersProfileChart = ({
   return <ReactEchart ref={chartRef} option={chartOption} echarts={echarts} {...rest} />;
 };
 
-export default BuyersProfileChart;
+export default DepartmentChart;
