@@ -39,6 +39,11 @@ const AccountDropdown = (): ReactElement => {
     navigate('/'); // Redirect to the home page
   };
 
+  const handleProfile = () => {
+    setAnchorEl(null);
+    navigate('/profile');
+  };
+
   return (
     <>
       <Button
@@ -53,9 +58,9 @@ const AccountDropdown = (): ReactElement => {
           gap: 1.875,
         }}
       >
-        <Avatar alt={name} src={image || profile} sx={{ width: 45, height: 45 }} />
+        <Avatar alt={name} src={image} sx={{ width: 45, height: 45 }} />
         <Typography variant="body1" component="p" color="text.primary">
-          {name || 'User'}
+          {name}
         </Typography>
         <IconifyIcon icon="ion:caret-down-outline" width={24} height={24} color="text.primary" />
       </Button>
@@ -76,17 +81,11 @@ const AccountDropdown = (): ReactElement => {
           </ListItemIcon>
           <ListItemText>Home</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleProfile}>
           <ListItemIcon>
             <IconifyIcon icon="mdi:account-outline" />
           </ListItemIcon>
           <ListItemText>Profile</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <IconifyIcon icon="material-symbols:settings" />
-          </ListItemIcon>
-          <ListItemText>Settings</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem

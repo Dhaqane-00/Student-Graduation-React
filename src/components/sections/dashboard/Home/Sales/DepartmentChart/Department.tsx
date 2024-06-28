@@ -56,6 +56,26 @@ const Department = (): ReactElement => {
     name: dept._id,
   }));
 
+  // Generate a list of colors for the pie chart
+  const colorPalette = [
+    theme.palette.primary.main,
+    theme.palette.secondary.main,
+    theme.palette.success.main,
+    theme.palette.error.main,
+    theme.palette.warning.main,
+    theme.palette.info.main,
+    theme.palette.grey[500],
+    '#8E44AD',
+    '#2980B9',
+    '#1ABC9C',
+    '#27AE60',
+    '#F39C12',
+    '#D35400',
+    '#C0392B',
+  ];
+
+  const pieChartColors = departments.map((_dept: any, index: number) => colorPalette[index % colorPalette.length]);
+
   // Function to get prediction count for a department
   const getPredictionCount = (department: any, prediction: string) => {
     const predictionData = department.predictions.find(
@@ -65,15 +85,15 @@ const Department = (): ReactElement => {
   };
 
   // Prepare legend data and colors for the chart
-  const legendData = [
-    { name: 'Will Graduate', icon: 'circle' },
-    { name: 'Dropout', icon: 'circle' },
-  ];
-  const pieChartColors = [
-    theme.palette.primary.main,
-    theme.palette.error.main,
-    
-  ];
+  const legendData = departments.map((dept: { _id: any; }, index: string | number) => {
+    return ({
+      name: dept._id,
+      icon: 'circle',
+      textStyle: {
+        color: pieChartColors[index],
+      },
+    });
+  });
 
   // Function to handle legend selection change
   const onChartLegendSelectChanged = (name: string) => {
@@ -92,7 +112,7 @@ const Department = (): ReactElement => {
         bgcolor: 'common.white',
         borderRadius: 5,
         height: 1,
-        width:1250,
+        width: 1250,
         flex: '1 1 auto',
       }}
     >
@@ -169,7 +189,7 @@ const Department = (): ReactElement => {
             flex: 1,
           }}
         >
-          {departments.map((dept: any) => (
+          {departments.map((dept: any, index: string | number) => (
             <Button
               key={dept._id}
               variant="text"
@@ -197,7 +217,7 @@ const Department = (): ReactElement => {
                     height: 20,
                     backgroundColor: buyerGenderType[dept._id]
                       ? 'action.disabled'
-                      : pieChartColors[0], // Assuming using the color for "Will Graduate"
+                      : pieChartColors[index],
                     borderRadius: 400,
                   }}
                 />

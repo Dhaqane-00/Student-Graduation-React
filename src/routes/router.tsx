@@ -29,7 +29,7 @@ const Home = lazy(() => import('pages/home/Home'));
 const Prediction = lazy(() => import('pages/prediction/Predictions'));
 const SinglePrediction = lazy(() => import('pages/SinglePredictio/SinglePrediction'));
 const ConfirmPassword = lazy(() => import('pages/authentication/ConfirmPassword'));
-
+const Profile = lazy(() => import('pages/Profile/profile'));
 const Login = lazy(async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
   return import('pages/authentication/Login');
@@ -109,6 +109,10 @@ const routes = [
             path: 'Single-Prediction',
             element: <SinglePrediction />,
           },
+          {
+            path: "profile",
+            element: <Profile />,
+          }
         ],
       },
       {

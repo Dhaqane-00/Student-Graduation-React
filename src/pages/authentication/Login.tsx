@@ -37,7 +37,9 @@ const Login = (): ReactElement => {
         const { token,user_data } = response;
         console.log(response);
         localStorage.setItem('token', token); // Store the token in local storage
-        localStorage.setItem('user', JSON.stringify(user_data)); 
+        localStorage.setItem('user', JSON.stringify(user_data));
+        localStorage.setItem('user_data', user_data.id);
+        
         toast.success('Login successful!');
         navigate('/home'); // Redirect to home page after successful login
       }

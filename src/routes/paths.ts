@@ -3,8 +3,8 @@ export const rootPaths = {
   pagesRoot: 'pages',
   prediction: '/prediction',
   SinglePrediction: '/Single-Prediction',
-
   applicationsRoot: 'applications',
+  profile: 'profile',
   ecommerceRoot: 'ecommerce',
   authRoot: 'authentication',
   notificationsRoot: 'notifications',
@@ -19,6 +19,7 @@ export default {
   Home: `/${rootPaths.homeRoot}/Home`,
   Predictions:`/${rootPaths.homeRoot}/prediction`,
   SinglePrediction:`/${rootPaths.homeRoot}/Single-Prediction`,
+  profile: `/${rootPaths.homeRoot}/profile`,
   login: `/${rootPaths.authRoot}/login`,
   signup: `/${rootPaths.authRoot}/sign-up`,
   resetPassword: `/${rootPaths.authRoot}/reset-password`,

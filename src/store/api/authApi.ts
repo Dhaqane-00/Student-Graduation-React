@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/auth' }), // Ensure this matches your Flask backend
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://graduation-backend.up.railway.app/auth' }), // Ensure this matches your Flask backend
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (formData) => {
@@ -60,6 +60,12 @@ export const authApi = createApi({
         },
       }),
     }),
+    getUserByID : builder.query({
+      query: (userId) => ({
+        url: `/user/${userId}`,
+        method: 'GET',
+      }),
+    })
   }),
 });
 
@@ -69,5 +75,6 @@ export const {
   useUpdateUserMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGetUserByIDQuery
 } = authApi;
 export default authApi.reducer;
