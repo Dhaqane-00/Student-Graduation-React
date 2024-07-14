@@ -106,7 +106,7 @@ const Table = (): ReactElement => {
         item['GPA-S1'], item['GPA-S2'], item['GPA-S3'], item['GPA-S4'], item['GPA-S5'],
         item['GPA-S6'], item['GPA-S7'], item['GPA-S8']
       ]);
-
+      
       return {
         id: item._id,
         Department: item.Department,
@@ -140,8 +140,10 @@ const Table = (): ReactElement => {
 
 
         CGPA: convertPercentageToGPA(totalCGpaPercentage),
+        
         Prediction: item.Prediction,
       };
+      
     });
   }, [data]);
   

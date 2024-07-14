@@ -47,19 +47,19 @@ const PredictSingle = () => {
           fullWidth
           required
         >
-          <MenuItem value="Computer-Application">Computer Application</MenuItem>
+          <MenuItem value="Computer_Application">Computer Application</MenuItem>
           <MenuItem value="Pharmacology">Pharmacology</MenuItem>
-          <MenuItem value="Computer-Networking-and-Security">Computer Networking and Security</MenuItem>
-          <MenuItem value="Medical-Laboratory-Science">Medical Laboratory Science</MenuItem>
-          <MenuItem value="Accounting-and-Finance">Accounting and Finance</MenuItem>
-          <MenuItem value="Banking-and-Finance">Banking and Finance </MenuItem>
-          <MenuItem value="Business-Administration">Business Administration</MenuItem>
-          <MenuItem value="Civil-Engineering">Civil Engineering</MenuItem>
+          <MenuItem value="Computer_Networking_and_Security">Computer Networking and Security</MenuItem>
+          <MenuItem value="Medical_Laboratory_Science">Medical Laboratory Science</MenuItem>
+          <MenuItem value="Accounting_and_Finance">Accounting and Finance</MenuItem>
+          <MenuItem value="Banking_and_Finance">Banking and Finance </MenuItem>
+          <MenuItem value="Business_Administration">Business Administration</MenuItem>
+          <MenuItem value="Civil_Engineering">Civil Engineering</MenuItem>
           <MenuItem value="Economics">Economics </MenuItem>
           <MenuItem value="Pharmacology"> Pharmacology</MenuItem>
-          <MenuItem value="Public-Administration ">Public Administration</MenuItem>
-          <MenuItem value="Computer-Multimedia">Computer Multimedia</MenuItem>
-          <MenuItem value="Electrical-and-Electronics">Electrical Engineering</MenuItem>
+          <MenuItem value="Public_Administration ">Public Administration</MenuItem>
+          <MenuItem value="Computer_Multimedia">Computer Multimedia</MenuItem>
+          <MenuItem value="Electrical_and_Electronics">Electrical Engineering</MenuItem>
           <MenuItem value="Pharmacology">Pharmacology</MenuItem>
           
         </TextField>

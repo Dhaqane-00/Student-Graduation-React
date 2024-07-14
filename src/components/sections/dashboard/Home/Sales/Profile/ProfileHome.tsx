@@ -41,11 +41,7 @@ const ProfileHome: React.FC = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Remove unwanted properties
-      const imageFile = new File([file], file.name);
-      
-      setImageFile(imageFile); // Store the modified file object
-  
+      setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string); // Display the image immediately
@@ -53,25 +49,28 @@ const ProfileHome: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
-  
 
   const handleSave = async () => {
     try {
+      if (!userId) {
+        throw new Error('User ID is missing');
+      }
+  
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
       formData.append('status', status);
       if (imageFile) {
-        formData.append('image', imageFile); // Append the file if it exists
+        formData.append('image', imageFile);
       }
-
-      console.log(formData);
+  
+      console.log('FormData:', Array.from(formData.entries()));
   
       const response = await updateUser({ userId, formData }).unwrap();
       if (response) {
         toast.success('Profile updated successfully!');
-        console.log(response);
       }
+      console.log(response);
     } catch (error) {
       toast.error('Failed to update profile. Please try again.');
       console.error('Update error:', error);

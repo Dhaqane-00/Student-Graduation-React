@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const fileApi = createApi({
   reducerPath: 'fileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://graduation-backend.up.railway.app/' }), // Ensure this matches your Flask backend
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }), // Ensure this matches your Flask backend
   endpoints: (builder) => ({
     uploadFile: builder.mutation({
       query: (file) => {

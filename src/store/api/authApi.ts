@@ -27,18 +27,32 @@ export const authApi = createApi({
         },
       }),
     }),
+    // updateUser: builder.mutation({
+    //   query: ({ userId, formData }) => {
+    //     const form = new FormData();
+    //     Object.keys(formData).forEach(key => {
+    //       form.append(key, formData[key]);
+    //     });
+    //     return {
+    //       url: `/update/${userId}`,
+    //       method: 'PUT',
+    //       body: formData,
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       }
+    //     };
+    //   },
+    // }),
     updateUser: builder.mutation({
-      query: ({ userId, formData }) => {
-        const form = new FormData();
-        Object.keys(formData).forEach(key => {
-          form.append(key, formData[key]);
-        });
-        return {
-          url: `/update/${userId}`,
-          method: 'PUT',
-          body: form,
-        };
-      },
+      query: ({ userId, formData }) => ({
+        url: `/update/${userId}`,
+        method: 'PUT',
+        body: formData,
+        headers: {
+          // Let the browser set the `Content-Type` header automatically for FormData
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     }),
     forgotPassword: builder.mutation({
       query: ({ email }) => ({
