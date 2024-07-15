@@ -3,8 +3,7 @@ import { Stack } from '@mui/material';
 import { ReactElement } from 'react';
 
 import TotalStudent from 'components/sections/dashboard/Home/Sales/TotalStudentChart/TotalStudent';
-import BuyersProfile from 'components/sections/dashboard/Home/Sales/DepartmentChart/Department';
-import NewCustomers from 'components/sections/dashboard/Home/Sales/NewCustomers/NewCustomers';
+import Department from 'components/sections/dashboard/Home/Sales/DepartmentChart/Department';
 import Student from 'components/sections/dashboard/Home/Sales/StudentChart/Student';
 
 import { drawerWidth } from 'layouts/main-layout';
@@ -36,7 +35,7 @@ const Home = (): ReactElement => {
         <ModeStudent />
       </Grid>
       <Grid xs={12} md={8} lg={12}>
-        <BuyersProfile />
+        <Department />
       </Grid>
     </Grid>
   );

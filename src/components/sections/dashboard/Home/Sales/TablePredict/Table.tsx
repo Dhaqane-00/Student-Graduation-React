@@ -69,7 +69,8 @@ const columns: GridColDef[] = [
   { field: 'GPA_S6', headerName: 'GPA S6', type: 'number', flex: 0.5, minWidth: 80 },
   { field: 'GPA_S7', headerName: 'GPA S7', type: 'number', flex: 0.5, minWidth: 80 },
   { field: 'GPA_S8', headerName: 'GPA S8', type: 'number', flex: 0.5, minWidth: 80 },
-  { field: 'CGPA', headerName: 'CGPA', flex: 0.5, minWidth: 80 },
+  { field: 'T_GPA', headerName: 'GPA Average', flex: 0.5, minWidth: 150 },
+  { field: 'CGPA', headerName: 'CGPA Scale', flex: 0.5, minWidth: 150 },
   { field: 'Prediction', headerName: 'Prediction', flex: 0.75, minWidth: 150 },
 ];
 
@@ -144,8 +145,16 @@ const Table = (): ReactElement => {
         GPA_S6: item['GPA-S6'],
         GPA_S7: item['GPA-S7'],
         GPA_S8: item['GPA-S8'],
-
-
+        T_GPA:calculateAverage([
+          item['GPA-S1'],
+          item['GPA-S2'],
+          item['GPA-S3'],
+          item['GPA-S4'],
+          item['GPA-S5'],
+          item['GPA-S6'],
+          item['GPA-S7'],
+          item['GPA-S8'],
+        ]),
         CGPA: convertPercentageToGPA(totalCGpaPercentage),
         
         Prediction: item.Prediction,
