@@ -58,7 +58,7 @@ const columns: GridColDef[] = [
   { field: 'Att_S6', headerName: 'Att-S6', type: 'number', flex: 0.5, minWidth: 150 },
   { field: 'Att_S7', headerName: 'Att-S7', type: 'number', flex: 0.5, minWidth: 150 },
   { field: 'Att_S8', headerName: 'Att-S8', type: 'number', flex: 0.5, minWidth: 150 },
-  { field: 'T_Att', headerName: 'T-Att', flex: 0.5, minWidth: 150 },
+  { field: 'T_Att', headerName: 'Att_Average', flex: 0.5, minWidth: 150 },
   { field: 'Schollarship', headerName: 'Schollarship', type: 'number', flex: 0.5, minWidth: 90 },
   { field: 'No_ReExam_Subjects', headerName: 'No-Re-exam', type: 'number', flex: 0.5, minWidth: 150 },
   { field: 'GPA_S1', headerName: 'GPA S1', type: 'number', flex: 0.5, minWidth: 80 },
