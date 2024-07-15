@@ -23,17 +23,16 @@ const ProfileHome: React.FC = () => {
   const { data: userData, isLoading, isError } = useGetUserByIDQuery(userId);
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [status, setStatus] = useState<string>('');
+  const [password, setPassword] = useState<string>(''); // For password change
   const [image, setImage] = useState<string>(''); // Initialize with an empty string or initial profile image URL
   const [imageFile, setImageFile] = useState<File | null>(null); // To store the selected file
   const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     if (userData && userData.user_data) {
-      const { name, email, status, image } = userData.user_data;
+      const { name, email, image } = userData.user_data;
       setName(name || '');
       setEmail(email || '');
-      setStatus(status || '');
       setImage(image || '');
     }
   }, [userData]);
@@ -59,7 +58,9 @@ const ProfileHome: React.FC = () => {
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
-      formData.append('status', status);
+      if (password) {
+        formData.append('password', password); // Append password if changed
+      }
       if (imageFile) {
         formData.append('image', imageFile);
       }
@@ -76,7 +77,6 @@ const ProfileHome: React.FC = () => {
       console.error('Update error:', error);
     }
   };
-  
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching user data</div>;
@@ -94,13 +94,13 @@ const ProfileHome: React.FC = () => {
             onChange={handleImageChange}
           />
           <label htmlFor="profile-image-upload">
-            <Button variant="contained" color="primary" component="span" style={{ marginTop: '1rem' }}>
+            <Button variant="contained" color="primary" component="span" fullWidth style={{ marginTop: '1rem' }}>
               Upload Image
             </Button>
           </label>
         </Grid>
-        <Grid item xs={12} sm={8}>
-          <Typography variant="h4">Edit Profile</Typography>
+        <Grid item xs={12} sm={8} >
+          <Typography variant="h4" align="center">Profile</Typography>
           <FieldContainer>
             <TextField
               label="Name"
@@ -116,18 +116,16 @@ const ProfileHome: React.FC = () => {
               variant="outlined"
               fullWidth
               value={email}
-              InputProps={{
-                readOnly: true, // Assuming email is not editable
-              }}
             />
           </FieldContainer>
           <FieldContainer>
             <TextField
-              label="Status"
+              label="New Password"
+              type="password"
               variant="outlined"
               fullWidth
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FieldContainer>
           <FieldContainer>

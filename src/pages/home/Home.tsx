@@ -35,7 +35,7 @@ const Home = (): ReactElement => {
       <Grid xs={12} md={4} lg={12}>
         <ModeStudent />
       </Grid>
-      <Grid xs={12} md={8}>
+      <Grid xs={12} md={8} lg={12}>
         <BuyersProfile />
       </Grid>
     </Grid>

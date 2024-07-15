@@ -96,15 +96,22 @@ const Table = (): ReactElement => {
   const belowSmallScreen = down('sm');
 
   const calculateAverage = (values: number[]) => {
-    const validValues = values.filter(value => !isNaN(value));
+    const validValues = values.filter(value => !isNaN(value) && value !== 0);
     return validValues.length > 0 ? (validValues.reduce((a, b) => a + b, 0) / validValues.length).toFixed(2) : '0';
-  };
+  };  
   const rows = useMemo(() => {
     if (!data) return [];
     return data.results.map((item: any) => {
       const totalCGpaPercentage = calculateAverage([
-        item['GPA-S1'], item['GPA-S2'], item['GPA-S3'], item['GPA-S4'], item['GPA-S5'],
-        item['GPA-S6'], item['GPA-S7'], item['GPA-S8']
+        item['GPA-S1'],
+        item['GPA-S2'],
+        item['GPA-S3'],
+        item['GPA-S4'],
+        item['GPA-S5'],
+        item['GPA-S6'],
+        item['GPA-S7'],
+        item['GPA-S8']
+
       ]);
       
       return {

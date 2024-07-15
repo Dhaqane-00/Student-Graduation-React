@@ -17,6 +17,7 @@ const ModeStudent = (): ReactElement => {
 
   // Fetch scholarship summary data
   const { data, error, isLoading } = useGetShollershipChartDataQuery(null);
+  console.log(data);
 
   let withScholarshipGraduation = 0;
   let withScholarshipDropout = 0;

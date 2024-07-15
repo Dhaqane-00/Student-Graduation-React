@@ -25,7 +25,7 @@ function Predictions(): ReactElement {
         width: isLargeScreen ? `calc(100% - ${drawerWidth}px)` : '100%',
       }}
     >
-      <Grid item xs={12} sm={6} md={4} lg={10}>
+      <Grid item xs={12} sm={6} md={4} lg={10} >
         <FileUpload />
       </Grid>
       <Grid item xs={12} sm={6} md={8} lg={9}>

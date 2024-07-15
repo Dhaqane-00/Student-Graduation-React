@@ -3,3 +3,6 @@
 html {
   scroll-behavior: smooth;
 }
+/* *{
+  outline: red 1px solid;
+} */

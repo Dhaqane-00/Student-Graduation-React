@@ -137,7 +137,7 @@ const Login = (): ReactElement => {
               <Button type="submit" variant="contained" fullWidth disabled={isLoading}>
                 {isLoading ? 'Logging in...' : 'Log in'}
               </Button>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" style={{ visibility: 'hidden' }}>
                 Don't have an account ?{' '}
                 <Link
                   href="/authentication/sign-up"

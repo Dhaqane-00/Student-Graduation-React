@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
-import { Box, Button, IconButton, Typography, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import React, { useState, useCallback } from 'react';
+import { Box, Button, IconButton, Typography, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider } from '@mui/material';
 import { CloudUpload, Delete } from '@mui/icons-material';
 import { useUploadFileMutation } from 'store/api/fileApi'; // Import your RTK query API
 import * as Yup from 'yup';
@@ -78,6 +78,7 @@ const FileUpload: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FileWithName | null>(null);
   const [uploadFileMutation] = useUploadFileMutation();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openInfoDialog, setOpenInfoDialog] = useState(false);
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
@@ -121,6 +122,14 @@ const FileUpload: React.FC = () => {
     handleUpload();
   };
 
+  const handleOpenInfoDialog = () => {
+    setOpenInfoDialog(true);
+  };
+
+  const handleCloseInfoDialog = () => {
+    setOpenInfoDialog(false);
+  };
+
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12}>
@@ -157,18 +166,20 @@ const FileUpload: React.FC = () => {
             Process the file
           </Button>
           {!selectedFile && (
-            <div className="flex justify-center mt-4">
-              <a
-                href="/sample.csv"
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                download
-              >
-                Download Sample CSV file
-              </a>
-            </div>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleOpenInfoDialog}
+              sx={{ mt: 2 }}
+            >
+              Information
+            </Button>
           )}
           <ToastContainer />
         </Box>
+        <Box justifyContent={'space-between'}>
+
+        
         <Dialog open={openDialog} onClose={handleCloseDialog}>
           <DialogTitle>Confirm Upload</DialogTitle>
           <DialogContent>
@@ -185,6 +196,50 @@ const FileUpload: React.FC = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog open={openInfoDialog} onClose={handleCloseInfoDialog}>
+          <DialogTitle style={{ textAlign: 'center' }}>Information</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <Typography variant="h6">Introduction</Typography>
+              information about the file upload process and requirements And Table
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="h6">File Upload</Typography>
+              <Divider sx={{ my: 2 }} />
+              <ul>
+                <li>The file should be in Excel (.xls, .xlsx) or CSV (.csv) format.</li>
+                <li>Ensure the file contains the necessary headers and data format.</li>
+                <li>File size should not exceed the allowed limit.</li>
+              </ul>
+              Please refer to the file example to understand the format of the file.<br />
+              <br />
+              <Typography variant="h6">Table - Data Source</Typography>
+              <Typography variant="body2">
+                The data displayed in this table is sourced from our internal database, which is regularly updated to reflect the latest information.
+              </Typography>
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="h6">Column Information</Typography>
+              <Typography variant="body2">
+              <strong>Department:</strong> The department to which the student belongs.<br />
+              <strong>Sex:</strong> The gender of the student.<br />
+              <strong>Mode:</strong> The mode of study (e.g., full-time, part-time).<br />
+              <strong>Att-S1 to Att-S8:</strong> Attendance percentages for each semester.<br />
+              <strong>Att_Average:</strong> The average attendance percentage across all semesters.<br />
+              <strong>Schollarship:</strong> The scholarship amount awarded to the student.<br />
+              <strong>No-Re-exam:</strong> The number of subjects the student has had to re-exam.<br />
+              <strong>GPA S1 to GPA S8:</strong> The GPA for each semester.<br />
+              <strong>CGPA:</strong> The cumulative GPA across all semesters.<br />
+              <strong>Prediction:</strong> The predicted performance or outcome for the student based on the provided data.
+            </Typography>
+
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseInfoDialog} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </Box>
       </Grid>
     </Grid>
   );
