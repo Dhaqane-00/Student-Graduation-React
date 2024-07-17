@@ -8,7 +8,7 @@ const ModeStudent = (): ReactElement => {
   const theme = useTheme();
   const chartRef = useRef<EChartsReactCore | null>(null);
 
-  const barChartColors = [
+  const pieChartColors = [
     theme.palette.secondary.main,
     theme.palette.primary.main,
     theme.palette.secondary.light,
@@ -50,73 +50,58 @@ const ModeStudent = (): ReactElement => {
   const seriesData = [
     {
       name: 'Graduates with Scholarship',
-      type: 'bar',
-      stack: 'students',
-      data: [withScholarshipGraduation],
+      value: withScholarshipGraduation,
       itemStyle: {
-        color: barChartColors[0],
+        color: pieChartColors[0],
       },
     },
     {
       name: 'Dropouts with Scholarship',
-      type: 'bar',
-      stack: 'students',
-      data: [withScholarshipDropout],
+      value: withScholarshipDropout,
       itemStyle: {
-        color: barChartColors[1],
+        color: pieChartColors[1],
       },
     },
     {
       name: 'Graduates without Scholarship',
-      type: 'bar',
-      stack: 'students',
-      data: [withoutScholarshipGraduation],
+      value: withoutScholarshipGraduation,
       itemStyle: {
-        color: barChartColors[2],
+        color: pieChartColors[2],
       },
     },
     {
       name: 'Dropouts without Scholarship',
-      type: 'bar',
-      stack: 'students',
-      data: [withoutScholarshipDropout],
+      value: withoutScholarshipDropout,
       itemStyle: {
-        color: barChartColors[3],
+        color: pieChartColors[3],
       },
     },
   ];
 
   const option = {
     tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+    series: [
+      {
+        name: 'Students',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '60%'],
+        data: seriesData,
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)',
+          },
+        },
+        label: {
+          formatter: '{b}: {c} ({d}%)',
+        },
       },
-    },
-    legend: {
-      data: [
-        'Graduates with Scholarship',
-        'Dropouts with Scholarship',
-        'Graduates without Scholarship',
-        'Dropouts without Scholarship'
-      ],
-    },
-    yAxis: {
-      type: 'category', // Use 'category' type for horizontal bars
-      data: ['Students'],
-    },
-    xAxis: {
-      type: 'value', // Use 'value' type for horizontal bars
-    },
-    series: seriesData.map((series) => ({
-      ...series,
-      barWidth: 30, // Adjust the width of bars as needed
-      label: {
-        show: true,
-        position: 'inside',
-        formatter: '{c}%', // Show percentage inside the bar
-      },
-    })),
+    ],
   };
 
   return (
@@ -147,52 +132,6 @@ const ModeStudent = (): ReactElement => {
           option={option}
           style={{ height: '110%', width: '100%' }}
         />
-      </Box>
-      <Box padding={1.75} display="flex" justifyContent="space-around">
-        <Box textAlign="center">
-          <Typography variant="h6" color="text.primary">
-            Graduates with Scholarship
-          </Typography>
-          <Typography variant="h4" color={barChartColors[0]}>
-            {withScholarshipGraduation}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {withGraduationPercentage}%
-          </Typography>
-        </Box>
-        <Box textAlign="center">
-          <Typography variant="h6" color="text.primary">
-            Dropouts with Scholarship
-          </Typography>
-          <Typography variant="h4" color={barChartColors[1]}>
-            {withScholarshipDropout}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {withDropoutPercentage}%
-          </Typography>
-        </Box>
-        <Box textAlign="center">
-          <Typography variant="h6" color="text.primary">
-            Graduates without Scholarship
-          </Typography>
-          <Typography variant="h4" color={barChartColors[2]}>
-            {withoutScholarshipGraduation}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {withoutGraduationPercentage}%
-          </Typography>
-        </Box>
-        <Box textAlign="center">
-          <Typography variant="h6" color="text.primary">
-            Dropouts without Scholarship
-          </Typography>
-          <Typography variant="h4" color={barChartColors[3]}>
-            {withoutScholarshipDropout}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {withoutDropoutPercentage}%
-          </Typography>
-        </Box>
       </Box>
     </Stack>
   );
