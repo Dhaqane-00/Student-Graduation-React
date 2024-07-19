@@ -88,8 +88,8 @@ const PredictSingle = () => {
           fullWidth
           required
         >
-          <MenuItem value="Fulltime">Fulltime</MenuItem>
-          <MenuItem value="Parttime">Parttime</MenuItem>
+          <MenuItem value="Fulltime">Full Time</MenuItem>
+          <MenuItem value="Parttime">Part Time</MenuItem>
         </TextField>
 
         <TextField

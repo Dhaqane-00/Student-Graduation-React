@@ -57,10 +57,6 @@ const ModeStudent = (): ReactElement => {
   const totalWithScholarship = withScholarshipGraduation + withScholarshipDropout;
   const totalWithoutScholarship = withoutScholarshipGraduation + withoutScholarshipDropout;
 
-  const withGraduationPercentage = totalWithScholarship ? ((withScholarshipGraduation / totalWithScholarship) * 100).toFixed(2) : '0';
-  const withDropoutPercentage = totalWithScholarship ? ((withScholarshipDropout / totalWithScholarship) * 100).toFixed(2) : '0';
-  const withoutGraduationPercentage = totalWithoutScholarship ? ((withoutScholarshipGraduation / totalWithoutScholarship) * 100).toFixed(2) : '0';
-  const withoutDropoutPercentage = totalWithoutScholarship ? ((withoutScholarshipDropout / totalWithoutScholarship) * 100).toFixed(2) : '0';
 
   const seriesData = [
     {

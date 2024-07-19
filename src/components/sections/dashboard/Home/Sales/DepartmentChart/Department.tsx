@@ -2,11 +2,11 @@ import {
   Box,
   Button,
   IconButton,
-  Menu,
-  MenuItem,
   Stack,
   Typography,
   useTheme,
+  useMediaQuery,
+  Divider,
 } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { ReactElement, useRef, useState } from 'react';
@@ -18,6 +18,7 @@ import ContentLoader from 'react-content-loader';
 
 const Department = (): ReactElement => {
   const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const chartRef = useRef<EChartsReactCore | null>(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -38,9 +39,7 @@ const Department = (): ReactElement => {
     setAnchorEl(event.currentTarget); // Fix: use currentTarget instead of target
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
 
   // Fetch department data using custom hook
   const { data, error, isLoading } = useGetDepartmentDataQuery(null);
@@ -48,22 +47,22 @@ const Department = (): ReactElement => {
   const Shimmer = () => (
     <ContentLoader
       speed={2}
-      width={1250}
-      height={500}
-      viewBox="0 0 1250 500"
+      width={isSmallScreen ? 350 : 1250}
+      height={isSmallScreen ? 350 : 500}
+      viewBox={`0 0 ${isSmallScreen ? 350 : 1250} ${isSmallScreen ? 350 : 500}`}
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
     >
-      <rect x="20" y="20" rx="5" ry="5" width="1200" height="30" />
+      <rect x="20" y="20" rx="5" ry="5" width={isSmallScreen ? 300 : 1200} height="30" />
       <rect x="20" y="70" rx="5" ry="5" width="200" height="30" />
       <rect x="240" y="70" rx="5" ry="5" width="200" height="30" />
       <rect x="460" y="70" rx="5" ry="5" width="200" height="30" />
-      <rect x="20" y="120" rx="5" ry="5" width="1200" height="300" />
+      <rect x="20" y="120" rx="5" ry="5" width={isSmallScreen ? 300 : 1200} height="300" />
     </ContentLoader>
   );
 
   if (isLoading) return <Shimmer />;
-  if (error) return <Typography>Error fetching data: {}</Typography>;
+  if (error) return <Typography>Error fetching data</Typography>;
 
   // Process department data to display
   const departments = data?.department_summary || [];
@@ -130,8 +129,10 @@ const Department = (): ReactElement => {
         bgcolor: 'common.white',
         borderRadius: 5,
         height: 1,
-        width: 1250,
+        width: '100%',
+        maxWidth: 1250,
         flex: '1 1 auto',
+        overflow: 'auto',
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center" padding={2.5}>
@@ -156,32 +157,10 @@ const Department = (): ReactElement => {
         >
           <IconifyIcon icon="ph:dots-three-outline-fill" color="text.secondary" />
         </IconButton>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem onClick={handleClose}>
-            <Typography variant="body1" component="p">
-              Edit
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Typography variant="body1" component="p" color="error.main">
-              Delete
-            </Typography>
-          </MenuItem>
-        </Menu>
       </Stack>
       <Stack
-        direction={{ xs: 'row', sm: 'column', md: 'row' }}
-        alignItems="center"
+        direction={isSmallScreen ? 'column' : 'row'}
+        alignItems={isSmallScreen ? 'flex-start' : 'center'}
         justifyContent="space-between"
         flex={1}
         gap={2}
@@ -196,14 +175,14 @@ const Department = (): ReactElement => {
             display: 'flex',
             justifyContent: 'center',
             flex: '1 1 0%',
-            width: 177,
+            width: isSmallScreen ? '100%' : 600,
             maxHeight: 500,
           }}
         />
         <Stack
           spacing={2}
           sx={{
-            width: { xs: 0.5, sm: 'auto', md: 'auto', lg: 'auto' },
+            width: isSmallScreen ? '100%' : 'auto',
             flex: 1,
           }}
         >
@@ -241,10 +220,13 @@ const Department = (): ReactElement => {
                 />
                 <Typography variant="body1" color="text.secondary" textAlign="left" flex={1}>
                   {dept._id}
+
                 </Typography>
+                <Divider ></Divider>
                 <Typography variant="body1" color="text.primary">
                   Will Graduate: {getPredictionCount(dept, 'Will Graduate')}
                 </Typography>
+                <Divider ></Divider>
                 <Typography variant="body1" color="text.primary">
                   Dropout: {getPredictionCount(dept, 'Dropout')}
                 </Typography>
