@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Grid, Avatar, Typography, TextField, Button, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import { useGetUserByIDQuery, useUpdateUserMutation } from 'store/api/authApi'; // Adjust the import path as per your project structure
-import { toast } from 'react-toastify'; // Assuming you have toast notifications set up
+import { toast, Toaster } from 'react-hot-toast';
+import ContentLoader from 'react-content-loader';
 
 const Root = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(4),
@@ -17,6 +18,24 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 const FieldContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
+
+const Shimmer = () => (
+  <ContentLoader
+    speed={2}
+    width={400}
+    height={500}
+    viewBox="0 0 400 500"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb"
+  >
+    <circle cx="200" cy="100" r="70" />
+    <rect x="50" y="200" rx="5" ry="5" width="300" height="25" />
+    <rect x="50" y="250" rx="5" ry="5" width="300" height="25" />
+    <rect x="50" y="300" rx="5" ry="5" width="300" height="25" />
+    <rect x="50" y="350" rx="5" ry="5" width="300" height="25" />
+    <rect x="50" y="400" rx="5" ry="5" width="300" height="25" />
+  </ContentLoader>
+);
 
 const ProfileHome: React.FC = () => {
   const userId = localStorage.getItem('user_data'); // Assuming 'user_data' contains the user ID
@@ -78,7 +97,7 @@ const ProfileHome: React.FC = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Shimmer />;
   if (isError) return <div>Error fetching user data</div>;
 
   return (

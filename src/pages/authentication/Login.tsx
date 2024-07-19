@@ -13,9 +13,8 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from 'store/api/authApi'; // Import the useLoginMutation hook
-import { toast, ToastContainer } from 'react-toastify'; // Import toast and ToastContainer
+import { toast, Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
-import loginBanner from 'assets/authentication-banners/login.png';
 import IconifyIcon from 'components/base/IconifyIcon';
 import logo from 'assets/logo/Just_logo2.png';
 import Image from 'components/base/Image';
@@ -165,7 +164,7 @@ const Login = (): ReactElement => {
           </Suspense>
         </Stack>
       </Stack>
-      <ToastContainer />
+      <Toaster />
     </>
   );
 };

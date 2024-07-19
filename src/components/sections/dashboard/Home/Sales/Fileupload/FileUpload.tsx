@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Typography, Grid, Dialog, DialogActions, Dialo
 import { CloudUpload, Delete } from '@mui/icons-material';
 import { useUploadFileMutation } from 'store/api/fileApi'; // Import your RTK query API
 import * as Yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDropzone } from 'react-dropzone';
 
@@ -87,27 +87,33 @@ const FileUpload: React.FC = () => {
   const handleUpload = async () => {
     if (selectedFile) {
       try {
-        const response = await uploadFileMutation(selectedFile);
-        console.log(response);
+        const response = await toast.promise(
+          uploadFileMutation(selectedFile),
+          {
+            loading: 'Uploading file...',
+            success: 'Processing file!',
+            error: 'Error uploading file!',
+          },
+          { position: 'top-center' }
+        );
+  
         if (response.data && response.data.message) {
-          toast.success(response.data.message, { position: "top-center" });
+          toast.success(response.data.message, { position: 'top-center' });
+        } else if (response.error && response.error.data && response.error.data.error) {
+          throw new Error(response.error.data.error);
         } else {
-          toast.error('Unknown response from server!', { position: "top-center" });
+          throw new Error('Unknown response from server!');
         }
         setSelectedFile(null);
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.error) {
-          toast.error(error.response.data.error, { position: "top-center" });
-        } else if (error.message) {
-          toast.error(error.message, { position: "top-center" });
-        } else {
-          toast.error('Error uploading file!', { position: "top-center" });
-        }
+        toast.error(error.message, { position: 'top-center' });
       }
     } else {
-      toast.error('No file selected!', { position: "top-center" });
+      toast.error('No file selected!', { position: 'top-center' });
     }
   };
+  
+  
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -175,7 +181,7 @@ const FileUpload: React.FC = () => {
               Information
             </Button>
           )}
-          <ToastContainer />
+          <Toaster />
         </Box>
         <Box justifyContent={'space-between'}>
 

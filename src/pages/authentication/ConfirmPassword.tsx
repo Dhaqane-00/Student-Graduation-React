@@ -1,6 +1,6 @@
 import { ReactElement, useState, useEffect } from 'react';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import IconifyIcon from 'components/base/IconifyIcon';
@@ -113,7 +113,7 @@ const ConfirmPassword = (): ReactElement => {
           </Typography>
         </Stack>
       </Stack>
-      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <Toaster position="top-right"  />
     </Stack>
   );
 };

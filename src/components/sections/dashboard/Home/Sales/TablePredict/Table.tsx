@@ -17,6 +17,7 @@ import CustomPagination from './CustomPagination';
 import { useBreakpoints } from 'providers/BreakpointsProvider';
 import { theme } from 'theme/theme';
 import * as XLSX from 'xlsx';
+import Shimmer from './Shimmer'; // Import the Shimmer component
 
 interface RowData {
   id: string;
@@ -199,7 +200,7 @@ const Table = (): ReactElement => {
     return () => clearInterval(interval);
   }, [refetch]);
 
-  if (isLoading) return <LinearProgress />;
+  if (isLoading) return <Shimmer />;
   if (error) return <Typography color="error">Error loading data</Typography>;
 
   return (

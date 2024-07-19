@@ -1,9 +1,26 @@
-import { ReactElement, useRef, useState, useEffect } from 'react';
+import { ReactElement, useRef } from 'react';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
-import { useGetSummaryChartDataQuery } from 'store/api/fileApi'; // Import the hook
+import { useGetSummaryChartDataQuery } from 'store/api/fileApi';
 import * as echarts from 'echarts';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../../../../theme/colors';
+import { watermelon } from '../../../../../../theme/colors';
+import ContentLoader from 'react-content-loader';
+
+const Shimmer = () => (
+  <ContentLoader
+    speed={2}
+    width="100%"
+    height={460}
+    viewBox="0 0 100% 460"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb"
+  >
+    <rect x="20" y="20" rx="5" ry="5" width="70%" height="30" />
+    <rect x="20" y="70" rx="5" ry="5" width="95%" height="300" />
+    <rect x="20" y="390" rx="5" ry="5" width="45%" height="50" />
+    <rect x="50%" y="390" rx="5" ry="5" width="45%" height="50" />
+  </ContentLoader>
+);
 
 const Student = (): ReactElement => {
   const theme = useTheme();
@@ -12,7 +29,7 @@ const Student = (): ReactElement => {
   const barChartColors = [theme.palette.secondary.main, theme.palette.primary.main];
 
   // Fetch summary data
-  const { data, error, isLoading } = useGetSummaryChartDataQuery( null);
+  const { data, error, isLoading } = useGetSummaryChartDataQuery(null);
 
   let totalGraduation = 0;
   let totalDropout = 0;
@@ -70,6 +87,9 @@ const Student = (): ReactElement => {
     },
     series: seriesData,
   };
+
+  if (isLoading) return <Shimmer />;
+  if (error) return <Typography>Error fetching data</Typography>;
 
   return (
     <Stack

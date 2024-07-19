@@ -3,6 +3,21 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import EChartsReactCore from 'echarts-for-react/lib/core';
 import { useGetShollershipChartDataQuery } from 'store/api/fileApi';
 import * as echarts from 'echarts';
+import ContentLoader from 'react-content-loader';
+
+const Shimmer = () => (
+  <ContentLoader
+    speed={2}
+    width={1250}
+    height={500}
+    viewBox="0 0 1250 500"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb"
+  >
+    <rect x="20" y="20" rx="5" ry="5" width="400" height="30" />
+    <rect x="20" y="70" rx="5" ry="5" width="1200" height="400" />
+  </ContentLoader>
+);
 
 const ModeStudent = (): ReactElement => {
   const theme = useTheme();
@@ -12,7 +27,7 @@ const ModeStudent = (): ReactElement => {
     theme.palette.secondary.main,
     theme.palette.primary.main,
     theme.palette.secondary.light,
-    theme.palette.primary.light
+    theme.palette.primary.light,
   ];
 
   // Fetch scholarship summary data
@@ -103,6 +118,9 @@ const ModeStudent = (): ReactElement => {
       },
     ],
   };
+
+  if (isLoading) return <Shimmer />;
+  if (error) return <Typography>Error fetching data</Typography>;
 
   return (
     <Stack

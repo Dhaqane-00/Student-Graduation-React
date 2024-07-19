@@ -1,10 +1,8 @@
 import { ReactElement, useState } from 'react';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import resetPassword from 'assets/authentication-banners/reset-password.png';
-import Image from 'components/base/Image';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { useForgotPasswordMutation } from 'store/api/authApi'; // Adjust the import path as needed
 
@@ -76,7 +74,7 @@ const ResetPassword = (): ReactElement => {
           </Typography>
         </Stack>
       </Stack>
-      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <Toaster position="top-right"  />
     </Stack>
   );
 };
