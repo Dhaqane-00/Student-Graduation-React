@@ -96,24 +96,22 @@ const FileUpload: React.FC = () => {
           },
           { position: 'top-center' }
         );
-  
+
         if (response.data && response.data.message) {
           toast.success(response.data.message, { position: 'top-center' });
-        } else if (response.error && response.error.data && response.error.data.error) {
-          throw new Error(response.error.data.error);
+        } else if ('error' in response && response.error && 'data' in response.error) {
+          throw new Error((response.error as any).data.error);
         } else {
           throw new Error('Unknown response from server!');
         }
         setSelectedFile(null);
       } catch (error) {
-        toast.error(error.message, { position: 'top-center' });
+        toast.error((error as Error).message, { position: 'top-center' });
       }
     } else {
       toast.error('No file selected!', { position: 'top-center' });
     }
   };
-  
-  
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -184,67 +182,64 @@ const FileUpload: React.FC = () => {
           <Toaster />
         </Box>
         <Box justifyContent={'space-between'}>
-
-        
-        <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Confirm Upload</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Uploading a new file will clear the old prediction. Are you sure you want to proceed?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmUpload} color="primary" autoFocus>
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog open={openInfoDialog} onClose={handleCloseInfoDialog}>
-          <DialogTitle style={{ textAlign: 'center' }}>Information</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <Typography variant="h6">Introduction</Typography>
-              information about the file upload process and requirements And Table
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6">File Upload</Typography>
-              <Divider sx={{ my: 2 }} />
-              <ul>
-                <li>The file should be in Excel (.xls, .xlsx) or CSV (.csv) format.</li>
-                <li>Ensure the file contains the necessary headers and data format.</li>
-                <li>File size should not exceed the allowed limit.</li>
-              </ul>
-              Please refer to the file example to understand the format of the file.<br />
-              <br />
-              <Typography variant="h6">Table - Data Source</Typography>
-              <Typography variant="body2">
-                The data displayed in this table is sourced from our internal database, which is regularly updated to reflect the latest information.
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6">Column Information</Typography>
-              <Typography variant="body2">
-              <strong>Department:</strong> The department to which the student belongs.<br />
-              <strong>Sex:</strong> The gender of the student.<br />
-              <strong>Mode:</strong> The mode of study (e.g., full-time, part-time).<br />
-              <strong>Att-S1 to Att-S8:</strong> Attendance percentages for each semester.<br />
-              <strong>Att_Average:</strong> The average attendance percentage across all semesters.<br />
-              <strong>Schollarship:</strong> The scholarship amount awarded to the student.<br />
-              <strong>No-Re-exam:</strong> The number of subjects the student has had to re-exam.<br />
-              <strong>GPA S1 to GPA S8:</strong> The GPA for each semester.<br />
-              <strong>CGPA:</strong> The cumulative GPA across all semesters.<br />
-              <strong>Prediction:</strong> The predicted performance or outcome for the student based on the provided data.
-            </Typography>
-
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseInfoDialog} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <DialogTitle>Confirm Upload</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Uploading a new file will clear the old prediction. Are you sure you want to proceed?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmUpload} color="primary" autoFocus>
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog open={openInfoDialog} onClose={handleCloseInfoDialog}>
+            <DialogTitle style={{ textAlign: 'center' }}>Information</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <Typography variant="h6">Introduction</Typography>
+                Information about the file upload process and requirements And Table
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="h6">File Upload</Typography>
+                <Divider sx={{ my: 2 }} />
+                <ul>
+                  <li>The file should be in Excel (.xls, .xlsx) or CSV (.csv) format.</li>
+                  <li>Ensure the file contains the necessary headers and data format.</li>
+                  <li>File size should not exceed the allowed limit.</li>
+                </ul>
+                Please refer to the file example to understand the format of the file.<br />
+                <br />
+                <Typography variant="h6">Table - Data Source</Typography>
+                <Typography variant="body2">
+                  The data displayed in this table is sourced from our internal database, which is regularly updated to reflect the latest information.
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="h6">Column Information</Typography>
+                <Typography variant="body2">
+                  <strong>Department:</strong> The department to which the student belongs.<br />
+                  <strong>Sex:</strong> The gender of the student.<br />
+                  <strong>Mode:</strong> The mode of study (e.g., full-time, part-time).<br />
+                  <strong>Att-S1 to Att-S8:</strong> Attendance percentages for each semester.<br />
+                  <strong>Att_Average:</strong> The average attendance percentage across all semesters.<br />
+                  <strong>Schollarship:</strong> The scholarship amount awarded to the student.<br />
+                  <strong>No-Re-exam:</strong> The number of subjects the student has had to re-exam.<br />
+                  <strong>GPA S1 to GPA S8:</strong> The GPA for each semester.<br />
+                  <strong>CGPA:</strong> The cumulative GPA across all semesters.<br />
+                  <strong>Prediction:</strong> The predicted performance or outcome for the student based on the provided data.
+                </Typography>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseInfoDialog} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Grid>
     </Grid>

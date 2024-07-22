@@ -180,6 +180,7 @@ const ProfileHome: React.FC = () => {
       />
       <Snackbar
         open={snackbarOpen}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         action={
