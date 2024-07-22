@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://graduation-backend.up.railway.app/auth' }), // Ensure this matches your Flask backend
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/auth' }), // Ensure this matches your backend URL
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (formData) => {
@@ -27,31 +27,11 @@ export const authApi = createApi({
         },
       }),
     }),
-    // updateUser: builder.mutation({
-    //   query: ({ userId, formData }) => {
-    //     const form = new FormData();
-    //     Object.keys(formData).forEach(key => {
-    //       form.append(key, formData[key]);
-    //     });
-    //     return {
-    //       url: `/update/${userId}`,
-    //       method: 'PUT',
-    //       body: formData,
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       }
-    //     };
-    //   },
-    // }),
     updateUser: builder.mutation({
       query: ({ userId, formData }) => ({
         url: `/update/${userId}`,
         method: 'PUT',
-        body: formData,
-        headers: {
-          // Let the browser set the `Content-Type` header automatically for FormData
-          'Content-Type': 'multipart/form-data',
-        },
+        body: formData,  // Directly pass the FormData object
       }),
     }),
     forgotPassword: builder.mutation({
@@ -74,12 +54,12 @@ export const authApi = createApi({
         },
       }),
     }),
-    getUserByID : builder.query({
+    getUserByID: builder.query({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: 'GET',
       }),
-    })
+    }),
   }),
 });
 
@@ -89,6 +69,7 @@ export const {
   useUpdateUserMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useGetUserByIDQuery
+  useGetUserByIDQuery,
 } = authApi;
+
 export default authApi.reducer;

@@ -54,9 +54,6 @@ const ModeStudent = (): ReactElement => {
     withoutScholarshipDropout = withoutDropoutData ? withoutDropoutData.count : 0;
   }
 
-  const totalWithScholarship = withScholarshipGraduation + withScholarshipDropout;
-  const totalWithoutScholarship = withoutScholarshipGraduation + withoutScholarshipDropout;
-
 
   const seriesData = [
     {

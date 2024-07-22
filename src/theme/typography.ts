@@ -6,43 +6,43 @@ const typography: TypographyOptions = {
   h1: {
     fontSize: pxToRem(40),
     fontWeight: 700,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   h2: {
     fontSize: pxToRem(28),
     fontWeight: 700,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   h3: {
     fontSize: pxToRem(25),
     fontWeight: 700,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   h4: {
     fontSize: pxToRem(22),
     fontWeight: 700,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   h5: {
     fontSize: pxToRem(20),
     fontWeight: 500,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
     color: 'black',
   },
   h6: {
     fontSize: pxToRem(18),
     fontWeight: 500,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   subtitle1: {
     fontSize: pxToRem(16),
     fontWeight: 500,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   subtitle2: {
     fontSize: pxToRem(16),
     fontWeight: 400,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Poppins',
   },
   body1: {
     fontSize: pxToRem(14),

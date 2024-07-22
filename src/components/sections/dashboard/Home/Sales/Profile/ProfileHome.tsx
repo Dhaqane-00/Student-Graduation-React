@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Avatar, Typography, TextField, Button, Box } from '@mui/material';
+import { Container, Grid, Avatar, Typography, TextField, Button, Box, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { styled } from '@mui/system';
 import { useGetUserByIDQuery, useUpdateUserMutation } from 'store/api/authApi'; // Adjust the import path as per your project structure
 import { toast, Toaster } from 'react-hot-toast';
 import ContentLoader from 'react-content-loader';
 
+// Styles
 const Root = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(4),
 }));
@@ -39,20 +40,25 @@ const Shimmer = () => (
 
 const ProfileHome: React.FC = () => {
   const userId = localStorage.getItem('user_data'); // Assuming 'user_data' contains the user ID
-  const { data: userData, isLoading, isError } = useGetUserByIDQuery(userId);
+  const { data: userData, isLoading: isLoadingUser, isError: isErrorUser } = useGetUserByIDQuery(userId);
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>(''); // For password change
   const [image, setImage] = useState<string>(''); // Initialize with an empty string or initial profile image URL
   const [imageFile, setImageFile] = useState<File | null>(null); // To store the selected file
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser, { isLoading: isUpdating, isError: isErrorUpdate }] = useUpdateUserMutation();
+
+  // Snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
 
   useEffect(() => {
     if (userData && userData.user_data) {
       const { name, email, image } = userData.user_data;
-      setName(name || '');
-      setEmail(email || '');
-      setImage(image || '');
+      setName(name);
+      setEmail(email);
+      setImage(image);
     }
   }, [userData]);
 
@@ -73,7 +79,7 @@ const ProfileHome: React.FC = () => {
       if (!userId) {
         throw new Error('User ID is missing');
       }
-  
+
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
@@ -83,12 +89,14 @@ const ProfileHome: React.FC = () => {
       if (imageFile) {
         formData.append('image', imageFile);
       }
-  
+
       console.log('FormData:', Array.from(formData.entries()));
-  
+
       const response = await updateUser({ userId, formData }).unwrap();
       if (response) {
-        toast.success('Profile updated successfully!');
+        toast.success(response.message || 'Profile updated successfully!');
+      } else {
+        toast.error('Failed to update profile. Please try again.');
       }
       console.log(response);
     } catch (error) {
@@ -97,8 +105,17 @@ const ProfileHome: React.FC = () => {
     }
   };
 
-  if (isLoading) return <Shimmer />;
-  if (isError) return <div>Error fetching user data</div>;
+  const handleSnackbarOpen = (message: string) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  if (isLoadingUser) return <Shimmer />;
+  if (isErrorUser) return <div>Error fetching user data</div>;
 
   return (
     <Root>
@@ -118,7 +135,7 @@ const ProfileHome: React.FC = () => {
             </Button>
           </label>
         </Grid>
-        <Grid item xs={12} sm={8} >
+        <Grid item xs={12} sm={8}>
           <Typography variant="h4" align="center">Profile</Typography>
           <FieldContainer>
             <TextField
@@ -135,6 +152,8 @@ const ProfileHome: React.FC = () => {
               variant="outlined"
               fullWidth
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onClick={() => handleSnackbarOpen('Changing Email')}
             />
           </FieldContainer>
           <FieldContainer>
@@ -148,12 +167,31 @@ const ProfileHome: React.FC = () => {
             />
           </FieldContainer>
           <FieldContainer>
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Save
+            <Button variant="contained" color="primary" onClick={handleSave} disabled={isUpdating}>
+              {isUpdating ? <CircularProgress size={24} /> : 'Save'}
             </Button>
           </FieldContainer>
+          {isErrorUpdate && <Typography color="error">Failed to update profile. Please try again.</Typography>}
         </Grid>
       </Grid>
+      <Toaster
+        position="top-center" // Change position as needed
+        reverseOrder={false}
+      />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        action={
+          <Button color="inherit" onClick={handleSnackbarClose}>
+            Close
+          </Button>
+        }
+      >
+        <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%', color: 'black' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Root>
   );
 };
