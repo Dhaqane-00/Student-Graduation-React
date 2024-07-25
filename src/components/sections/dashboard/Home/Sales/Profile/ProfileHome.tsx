@@ -167,7 +167,7 @@ const ProfileHome: React.FC = () => {
             />
           </FieldContainer>
           <FieldContainer>
-            <Button variant="contained" color="primary" onClick={handleSave} disabled={isUpdating}>
+            <Button variant="contained" fullWidth color="primary" onClick={handleSave} disabled={isUpdating}>
               {isUpdating ? <CircularProgress size={24} /> : 'Save'}
             </Button>
           </FieldContainer>
