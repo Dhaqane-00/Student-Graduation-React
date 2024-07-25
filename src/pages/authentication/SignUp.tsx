@@ -32,7 +32,7 @@ const SignUp = (): ReactElement => {
     password: '',
   });
 
-  const [signupMutation, { isLoading, isError, isSuccess }] = useSignupMutation();
+  const [signupMutation, { isLoading, isError }] = useSignupMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

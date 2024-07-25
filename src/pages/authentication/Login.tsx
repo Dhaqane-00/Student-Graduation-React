@@ -24,7 +24,7 @@ const Login = (): ReactElement => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [login, { isLoading, isError, error }] = useLoginMutation(); // Use the login mutation
+  const [login, { isLoading }] = useLoginMutation(); // Use the login mutation
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -39,8 +39,9 @@ const Login = (): ReactElement => {
         localStorage.setItem('user', JSON.stringify(user_data));
         localStorage.setItem('user_data', user_data.id);
         
-        toast.success('Login successful!');
         navigate('/home'); // Redirect to home page after successful login
+
+        toast.success('Login successful!');
       }
     } catch (err) {
       toast.error('Invalid email or password'); // Handle login error

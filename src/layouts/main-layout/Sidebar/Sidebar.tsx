@@ -8,7 +8,7 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke, blue, white, cream } from '../../../theme/colors';
+import { watermelon } from '../../../theme/colors';
 
 import IconifyIcon from 'components/base/IconifyIcon';
 import logo from 'assets/logo/Just_logo.png';

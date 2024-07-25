@@ -11,7 +11,6 @@ import {
 import IconifyIcon from 'components/base/IconifyIcon';
 import { MouseEvent, ReactElement, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import profile from 'assets/profile/profile.jpg';
 
 const AccountDropdown = (): ReactElement => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

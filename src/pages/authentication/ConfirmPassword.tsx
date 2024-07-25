@@ -12,7 +12,7 @@ const ConfirmPassword = (): ReactElement => {
   const location = useLocation();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const query = new URLSearchParams(location.search);
   const token = query.get('token');

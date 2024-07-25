@@ -1,7 +1,7 @@
 import { Box, Stack } from "@mui/material";
 import ProfileHome from "components/sections/dashboard/Home/Sales/Profile/ProfileHome";
 import { drawerWidth } from "layouts/main-layout";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 function profile(): ReactElement {
   return (

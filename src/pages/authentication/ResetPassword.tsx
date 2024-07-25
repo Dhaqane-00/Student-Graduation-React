@@ -2,14 +2,12 @@ import { ReactElement, useState } from 'react';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, Link, Stack, TextField, Typography } from '@mui/material';
 import { toast, Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { useForgotPasswordMutation } from 'store/api/authApi'; // Adjust the import path as needed
 
 const ResetPassword = (): ReactElement => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [forgotPassword, { isLoading, isError }] = useForgotPasswordMutation(); // Use the useForgotPasswordMutation hook
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation(); // Use the useForgotPasswordMutation hook
 
   const handleResetPassword = async () => {
     try {
@@ -74,7 +72,7 @@ const ResetPassword = (): ReactElement => {
           </Typography>
         </Stack>
       </Stack>
-      <Toaster position="top-right"  />
+      <Toaster position="top-center"  />
     </Stack>
   );
 };

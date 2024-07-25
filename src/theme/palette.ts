@@ -1,6 +1,6 @@
 import { PaletteOptions } from '@mui/material';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from './colors';
-import { green, red, yellow } from '@mui/material/colors';
+import { downy, watermelon, black, smoke,blue, white, cream } from './colors';
+import { green, red} from '@mui/material/colors';
 
 const palette: PaletteOptions = {
   primary: {

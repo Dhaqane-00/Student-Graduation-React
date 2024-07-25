@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { Box, Stack, Typography } from '@mui/material';
+import { ReactElement } from "react";
+import { Box, Stack } from '@mui/material';
 import { drawerWidth } from "layouts/main-layout";
 import PredictSingle from "components/sections/dashboard/Home/Sales/PredictSingle/PredictSingle";
 

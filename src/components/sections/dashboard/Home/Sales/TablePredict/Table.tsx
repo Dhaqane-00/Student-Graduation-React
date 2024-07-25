@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useMemo, useState, useEffect } from 'react';
+import { ChangeEvent, ReactElement, useMemo, useState, useEffect } from 'react';
 import {
   Divider,
   InputAdornment,
@@ -75,7 +75,7 @@ const columns: GridColDef[] = [
   { field: 'Prediction', headerName: 'Prediction', flex: 0.75, minWidth: 150 },
 ];
 
-const convertPercentageToGPA = (percentage) => {
+const convertPercentageToGPA = (percentage: number): number => {
   if (percentage >= 95) return 4.0;
   if (percentage >= 90) return 3.7;
   if (percentage >= 85) return 3.3;
@@ -97,10 +97,12 @@ const Table = (): ReactElement => {
   const { down } = useBreakpoints();
   const belowSmallScreen = down('sm');
 
-  const calculateAverage = (values: number[]) => {
+  const calculateAverage = (values: number[]): number => {
     const validValues = values.filter(value => !isNaN(value) && value !== 0);
-    return validValues.length > 0 ? (validValues.reduce((a, b) => a + b, 0) / validValues.length).toFixed(2) : '0';
+    return validValues.length > 0 ? Number((validValues.reduce((a, b) => a + b, 0) / validValues.length).toFixed(2)) : 0;
   };  
+
+
   const rows = useMemo(() => {
     if (!data) return [];
     return data.results.map((item: any) => {
@@ -113,9 +115,8 @@ const Table = (): ReactElement => {
         item['GPA-S6'],
         item['GPA-S7'],
         item['GPA-S8']
-
       ]);
-      
+
       return {
         id: item._id,
         Department: item.Department,
@@ -129,15 +130,18 @@ const Table = (): ReactElement => {
         Att_S6: item['Att-S6'],
         Att_S7: item['Att-S7'],
         Att_S8: item['Att-S8'],
-
         T_Att: calculateAverage([
-          item['Att-S1'], item['Att-S2'], item['Att-S3'], item['Att-S4'], item['Att-S5'],
-          item['Att-S6'], item['Att-S7'], item['Att-S8']
+          item['Att-S1'],
+          item['Att-S2'],
+          item['Att-S3'],
+          item['Att-S4'],
+          item['Att-S5'],
+          item['Att-S6'],
+          item['Att-S7'],
+          item['Att-S8']
         ]),
-
-        Schollarship: item.Schollarship || 0,
-        No_ReExam_Subjects: item['NO-Re-exams'] || 0,
-
+        Schollarship: item.Schollarship,
+        No_ReExam_Subjects: item['NO-Re-exams'],
         GPA_S1: item['GPA-S1'],
         GPA_S2: item['GPA-S2'],
         GPA_S3: item['GPA-S3'],
@@ -146,21 +150,10 @@ const Table = (): ReactElement => {
         GPA_S6: item['GPA-S6'],
         GPA_S7: item['GPA-S7'],
         GPA_S8: item['GPA-S8'],
-        T_GPA:calculateAverage([
-          item['GPA-S1'],
-          item['GPA-S2'],
-          item['GPA-S3'],
-          item['GPA-S4'],
-          item['GPA-S5'],
-          item['GPA-S6'],
-          item['GPA-S7'],
-          item['GPA-S8'],
-        ]),
+        T_GPA: totalCGpaPercentage,
         CGPA: convertPercentageToGPA(totalCGpaPercentage),
-        
-        Prediction: item.Prediction,
+        Prediction: item.Prediction
       };
-      
     });
   }, [data]);
   

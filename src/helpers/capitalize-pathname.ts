@@ -1,5 +1,6 @@
 function capitalizePathname(input: string): string {
-  const lastSegment = input.split('/').at(-1);
+  const segments = input.split('/');
+  const lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
 
   if (lastSegment) {
     return lastSegment

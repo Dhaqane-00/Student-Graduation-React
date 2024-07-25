@@ -1,11 +1,8 @@
 import { MouseEventHandler, ReactElement } from 'react';
 import {
   AppBar,
-  Badge,
   Box,
   IconButton,
-  InputAdornment,
-  TextField,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -16,7 +13,7 @@ import { useLocation } from 'react-router-dom';
 import capitalizePathname from 'helpers/capitalize-pathname';
 import AccountDropdown from './AccountDropdown';
 import { theme } from 'theme/theme';
-import { caribbeanGreen, orange, downy, watermelon, black, smoke,blue, white, cream } from '../../../theme/colors';
+import {black} from '../../../theme/colors';
 
 // import LanguageDropdown from './LanguageDropdown';
 
