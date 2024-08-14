@@ -219,7 +219,20 @@ const FileUpload: React.FC = () => {
                   The data displayed in this table is sourced from our internal database, which is regularly updated to reflect the latest information.
                 </Typography>
                 <Divider sx={{ my: 2 }} />
-                <Typography variant="h6">Column Information</Typography>
+                <Typography variant="h6">Data Format Input</Typography>
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="body2">
+                  <strong>Department:</strong> The department to which the student belongs.<br />
+                  <strong>Sex:</strong> The gender of the student.<br />
+                  <strong>Mode:</strong> The mode of study (e.g., full-time, part-time).<br />
+                  <strong>Att-S1 to Att-S8:</strong> Attendance percentages for each semester.<br />
+                  <strong>Schollarship:</strong> The scholarship amount awarded to the student.<br />
+                  <strong>No-Re-exam:</strong> The number of subjects the student has had to re-exam.<br />
+                  <strong>GPA S1 to GPA S8:</strong> The GPA for each semester.<br />
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="h6">Prediction</Typography>
+                <Divider sx={{ my: 2 }} />
                 <Typography variant="body2">
                   <strong>Department:</strong> The department to which the student belongs.<br />
                   <strong>Sex:</strong> The gender of the student.<br />
@@ -233,6 +246,7 @@ const FileUpload: React.FC = () => {
                   <strong>Prediction:</strong> The predicted performance or outcome for the student based on the provided data.
                 </Typography>
               </DialogContentText>
+
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseInfoDialog} color="primary">

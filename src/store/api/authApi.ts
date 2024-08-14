@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://graduation-backend.up.railway.app/auth' }), // Ensure this matches your backend URL
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/auth' }), // Ensure this matches your backend URL
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (formData) => {
